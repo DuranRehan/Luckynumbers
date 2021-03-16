@@ -21,7 +21,7 @@ public class Tile {
     }
 
     /**
-     * Get the value of value
+     * Get the tile of value
      *
      * @return the value of value
      */
@@ -36,7 +36,7 @@ public class Tile {
      */
     @Override
     public String toString() {
-        return "{" + value + "}";
+        return value + " ";
     }
 
     /**
