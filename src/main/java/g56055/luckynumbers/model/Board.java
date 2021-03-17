@@ -4,25 +4,20 @@ import java.util.Arrays;
 
 /**
  *
- * @author Duran Rehan g56055, Define the game board on which the player will
- * play
+ * @author Duran Rehan g56055
+ *
+ * Define the game board on which the player will play
  */
 public class Board {
 
     private Tile[][] tiles;
 
     /**
-     * Constructor for Board class, define a game board with a size given by the
-     * getSize method
+     * define a game board with a given size by the getSize method
      */
     public Board() {
         int size = getSize();
-        tiles = new Tile[size][size];
-        for (Tile[] lg : tiles) {
-            for (Tile col : lg) {
-                col = new Tile(0);
-            }
-        }
+        this.tiles = new Tile[size][size];
     }
 
     /**
@@ -30,14 +25,14 @@ public class Board {
      *
      * @return the size of game board
      */
-    public Integer getSize() {
+    public int getSize() {
         return 4;
     }
 
     /**
      * Check if the given position is inside the game board
      *
-     * @param pos
+     * @param pos position to check
      * @return true if the position is inside the board false otherwise
      */
     public boolean isInside(Position pos) {
@@ -51,7 +46,7 @@ public class Board {
     /**
      * Get tile of a given position
      *
-     * @param pos
+     * @param pos position of the tile on the game board
      * @return the tile at position
      */
     public Tile getTile(Position pos) {
@@ -62,20 +57,26 @@ public class Board {
      * Checks if the given tile can be placed in the given position while
      * respecting the rules.
      *
-     * @param tile
-     * @param pos
+     * @param tile tile for which it is necessary to check if it can be placed
+     * @param pos position of the tile to check
      * @return true if the tile can be placed, false otherwise
      */
     public boolean canBePut(Tile tile, Position pos) {
-        //TO DO
+        int lg = pos.getRow();
+        while (lg > 0 && pos.getColumn() > 0) {
+            if (tiles[lg][pos.getColumn()].getValue() > tile.getValue()) {
+                return false;
+            }
+            lg--;
+        }
         return true;
     }
 
     /**
-     * Place a given tile at a specific position
+     * Place on the game board a given tile at a specific position
      *
-     * @param tile
-     * @param pos
+     * @param tile the tile to place
+     * @param pos the position where the tile should be placed
      */
     public void put(Tile tile, Position pos) {
         tiles[pos.getRow()][pos.getColumn()] = tile;
@@ -87,9 +88,14 @@ public class Board {
      * @return true if the board is full, false otherwise
      */
     public boolean isFull() {
-
-        return false;
-        //TO DOOOOO
+        for (Tile[] lg : tiles) {
+            for (Tile col : lg) {
+                if (col == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override

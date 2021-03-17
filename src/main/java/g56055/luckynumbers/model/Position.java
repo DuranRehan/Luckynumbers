@@ -2,20 +2,22 @@ package g56055.luckynumbers.model;
 
 /**
  *
- * @author Duran Rehan g56055, Determine a precise position on the game board
+ * @author Duran Rehan g56055
+ *
+ * Determine a precise position on the game board
  */
 public class Position {
 
-    private final Integer row;
-    private final Integer column;
+    private final int row;
+    private final int column;
 
     /**
-     * Constructor for Postion class
+     * Define a position on the game board 
      *
-     * @param row
-     * @param column
+     * @param row the row of the game board
+     * @param column the column of the game board
      */
-    public Position(Integer row, Integer column) {
+    public Position(int row, int column) {
         this.row = row;
         this.column = column;
     }
@@ -25,7 +27,7 @@ public class Position {
      *
      * @return the value of column
      */
-    public Integer getColumn() {
+    public int getColumn() {
         return column;
     }
 
@@ -34,7 +36,7 @@ public class Position {
      *
      * @return the value of row
      */
-    public Integer getRow() {
+    public int getRow() {
         return row;
     }
 

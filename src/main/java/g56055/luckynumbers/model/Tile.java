@@ -4,28 +4,29 @@ import java.util.Objects;
 
 /**
  *
- * @author Duran Rehan g56055, define the characteristics of a tile in the game
- * Lucky Numbers
+ * @author Duran Rehan g56055
+ *
+ * Define the characteristics of a tile in the game Lucky Numbers
  */
 public class Tile {
 
-    private final Integer value;
+    private final int value;
 
     /**
-     * Constructor for Tile class, define a tile with a value
+     * Define a tile with a specific value
      *
-     * @param value
+     * @param value value that will be placed on the tile
      */
-    public Tile(Integer value) {
+    public Tile(int value) {
         this.value = value;
     }
 
     /**
-     * Get the tile of value
+     * Get the value of a tile
      *
-     * @return the value of value
+     * @return the value of tile
      */
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -53,7 +54,7 @@ public class Tile {
     /**
      * Checks if the value of the tile is equal to the value of another tile
      *
-     * @param obj
+     * @param obj the tile to compare with the actual tile
      * @return true if the tiles are equals, false otherwise
      */
     @Override
