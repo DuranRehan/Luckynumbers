@@ -25,7 +25,7 @@ public class Board {
      *
      * @return the size of game board
      */
-    public int getSize() {
+    public Integer getSize() {
         return 4;
     }
 
@@ -62,14 +62,165 @@ public class Board {
      * @return true if the tile can be placed, false otherwise
      */
     public boolean canBePut(Tile tile, Position pos) {
+        if (emptyBoard()) {
+            return true;
+        }
+        if (tile == null && isRespectingRules(tile, pos)) {
+            return true;
+        } else {
+
+            return isRespectingRules(tile, pos);
+        }
+    }
+
+    /**
+     * Check from its initial position to the right edge of the game board if
+     * all the tiles are greater than the one you want to put
+     *
+     * @param tile the tile you want to check
+     * @param pos the position to check
+     * @return true if the tile at position are lower than others, false
+     * otherwise
+     */
+    private boolean canBePutIn_Row_Right(Tile tile, Position pos) {
         int lg = pos.getRow();
-        while (lg > 0 && pos.getColumn() > 0) {
-            if (tiles[lg][pos.getColumn()].getValue() > tile.getValue()) {
-                return false;
+        int col = pos.getColumn() + 1;
+        Position posCandidate = new Position(lg, col);
+        boolean inside = isInside(posCandidate);
+        while (inside) {
+            if (tiles[lg][col] == null) {
+                posCandidate = new Position(lg, col + 1);
+                col += 1;
+            } else {
+                if (tiles[lg][col].getValue() <= tile.getValue()) {
+                    return false;
+                }
+                posCandidate = new Position(lg, col + 1);
+                col += 1;
             }
-            lg--;
+            inside = isInside(posCandidate);
         }
         return true;
+    }
+
+    /**
+     * Check from its initial position to the left edge of the game board if all
+     * the tiles are lower than the one you want to put
+     *
+     * @param tile the tile you want to check
+     * @param pos the position to check
+     * @return true if the tile at position are greater than others, false
+     * otherwise
+     */
+    private boolean canBePutIn_Row_Left(Tile tile, Position pos) {
+        int lg = pos.getRow();
+        int col = pos.getColumn() - 1;
+        Position posCandidate = new Position(lg, col);
+        boolean inside = isInside(posCandidate);
+        while (inside) {
+            if (tiles[lg][col] == null) {
+                posCandidate = new Position(lg, col - 1);
+                col -= 1;
+            } else {
+                if (tiles[lg][col].getValue() >= tile.getValue()) {
+                    return false;
+                }
+                posCandidate = new Position(lg, col - 1);
+                col -= 1;
+            }
+            inside = isInside(posCandidate);
+        }
+        return true;
+    }
+
+    /**
+     * Check from its initial position to the upper edge of the game board if
+     * all the tiles are lower than the one you want to put
+     *
+     * @param tile the tile you want to check
+     * @param pos the position to check
+     * @return true if the tile at position are greater than others, false
+     * otherwise
+     */
+    private boolean canBePutIn_Col_Up(Tile tile, Position pos) {
+        int lg = pos.getRow() + 1;
+        int col = pos.getColumn();
+        Position posCandidate = new Position(lg, col);
+        boolean inside = isInside(posCandidate);
+        while (inside) {
+            if (tiles[lg][col] == null) {
+                posCandidate = new Position(lg + 1, col);
+                lg += 1;
+            } else {
+                if (tiles[lg][col].getValue() <= tile.getValue()) {
+                    return false;
+                }
+                posCandidate = new Position(lg + 1, col);
+                lg += 1;
+            }
+            inside = isInside(posCandidate);
+        }
+        return true;
+    }
+
+    /**
+     * Check from its initial position to the lower edge of the game board if
+     * all the tiles are greater than the one you want to put
+     *
+     * @param tile the tile you want to check
+     * @param pos the position to check
+     * @return true if the tile at position are lower than others, false
+     * otherwise
+     */
+    private boolean canBePutIn_Col_Down(Tile tile, Position pos) {
+        int lg = pos.getRow() - 1;
+        int col = pos.getColumn();
+        Position posCandidate = new Position(lg, col);
+        boolean inside = isInside(posCandidate);
+        while (inside) {
+            if (tiles[lg][col] == null) {
+                posCandidate = new Position(lg - 1, col);
+                lg -= 1;
+            } else {
+                if (tiles[lg][col].getValue() >= tile.getValue()) {
+                    return false;
+                }
+                posCandidate = new Position(lg - 1, col);
+                lg -= 1;
+            }
+            inside = isInside(posCandidate);
+        }
+        return true;
+    }
+
+    /**
+     * Check if the game board is empty or not
+     *
+     * @return true if the game board is empty
+     */
+    private boolean emptyBoard() {
+        for (Tile[] lg : tiles) {
+            for (Tile column : lg) {
+                if (column != null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if the tile you want to place respects the rules of the game
+     *
+     * @param tile the tile you want to check
+     * @param pos the position you want to place the tile
+     * @return true if the tile at position respect the rules, false otherwise
+     */
+    private boolean isRespectingRules(Tile tile, Position pos) {
+        return canBePutIn_Row_Right(tile, pos)
+                && canBePutIn_Row_Left(tile, pos)
+                && canBePutIn_Col_Up(tile, pos)
+                && canBePutIn_Col_Down(tile, pos);
     }
 
     /**
@@ -101,7 +252,7 @@ public class Board {
     @Override
     public String toString() {
         return Arrays.deepToString(tiles);
-        //TO COMPLETE AND MODIFYE
+        //JUST FOR TESTING
     }
 
 }
