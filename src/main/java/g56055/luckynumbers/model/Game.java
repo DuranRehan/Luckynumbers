@@ -16,7 +16,7 @@ public class Game implements Model {
     private int currentPlayerNumber;
     private Board[] boards;
     private Tile pickedTile;
-    
+
     /**
      * Define a game to its initial state
      */
@@ -36,7 +36,7 @@ public class Game implements Model {
         this.currentPlayerNumber = 0;
         this.playerCount = playerCount;
         this.boards = new Board[playerCount];
-        for (int i = 0; i < playerCount - 1; i++) {
+        for (int i = 0; i <= playerCount - 1; i++) {
             boards[i] = new Board();
         }
     }
@@ -77,10 +77,10 @@ public class Game implements Model {
     @Override
     public void putTile(Position pos) {
         if (this.state != PLACE_TILE) {
-            throw new IllegalStateException("Wrong state");
+            throw new IllegalStateException("IS NOT PLACE_TILE STATE ");
         }
         if (!canTileBePut(pos)) {
-            throw new IllegalArgumentException("Wrong argument");
+            throw new IllegalArgumentException("Tile cannot be place !");
         }
         boards[currentPlayerNumber].put(pickedTile, pos);
         if (boards[currentPlayerNumber].isFull()) {
@@ -93,10 +93,14 @@ public class Game implements Model {
     @Override
     public void nextPlayer() {
         if (state != TURN_END) {
-            throw new IllegalStateException("IS NOT TURN_END");
+            throw new IllegalStateException(" TURN is not END");
         }
         state = PICK_TILE;
-        currentPlayerNumber = currentPlayerNumber + 1 % playerCount - 1;
+        if (currentPlayerNumber >= playerCount - 1) {
+            currentPlayerNumber = 0;
+        } else {
+            currentPlayerNumber = currentPlayerNumber + 1;
+        }
     }
 
     @Override
@@ -152,7 +156,7 @@ public class Game implements Model {
         if (state == NOT_STARTED) {
             throw new IllegalStateException("GAME IS NOT STARTED");
         }
-        if (!isInside(pos) || playerNumber > playerCount) {
+        if (!isInside(pos) || playerNumber > playerCount || playerNumber < 0) {
             throw new IllegalArgumentException("Tile is not valide");
         }
 
