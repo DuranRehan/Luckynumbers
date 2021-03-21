@@ -248,11 +248,4 @@ public class Board {
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return Arrays.deepToString(tiles);
-        //JUST FOR TESTING
-    }
-
 }

@@ -31,16 +31,6 @@ public class Tile {
     }
 
     /**
-     * Representation of the object in String
-     *
-     * @return value attribute in String
-     */
-    @Override
-    public String toString() {
-        return value + " ";
-    }
-
-    /**
      * Checks if the value of the tile is equal to the value of another tile
      * using a hashCode
      *

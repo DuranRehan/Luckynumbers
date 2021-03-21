@@ -6,7 +6,10 @@ import java.util.Scanner;
 
 /**
  *
- * @author Duran Rehan g56055,
+ * @author Duran Rehan g56055
+ *
+ * Gather the necessary elements for the game view and implement the console
+ * view
  */
 public class MyView implements View {
 
@@ -112,13 +115,15 @@ public class MyView implements View {
         System.out.println("[CHOOSE] Which column : ");
         int col = reading_int_Robust();
         Position pos = new Position(row, col);
-        if(!game.isInside(pos)) {
+        if (!game.isInside(pos)) {
             displayError("Position is not valide");
         }
-        return new Position(row-1, col-1);
+        return new Position(row - 1, col - 1);
     }
+
     /**
      * Robustly read an integer entered on keyboard
+     *
      * @return the integer entered on the keyboard
      */
     private int reading_int_Robust() {
