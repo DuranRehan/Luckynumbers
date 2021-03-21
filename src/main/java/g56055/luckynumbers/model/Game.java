@@ -82,7 +82,12 @@ public class Game implements Model {
         if (!canTileBePut(pos)) {
             throw new IllegalArgumentException("Tile cannot be place !");
         }
-        boards[currentPlayerNumber].put(pickedTile, pos);
+        if(getTile(currentPlayerNumber, pos) != null) {
+            boards[currentPlayerNumber].put(pickedTile, pos);
+        } else {
+            boards[currentPlayerNumber].put(null, pos);
+            boards[currentPlayerNumber].put(pickedTile, pos);
+        }
         if (boards[currentPlayerNumber].isFull()) {
             this.state = GAME_OVER;
         } else {
@@ -144,7 +149,7 @@ public class Game implements Model {
         if (state != PLACE_TILE) {
             throw new IllegalStateException("IS NOT PLACE TILE");
         }
-        if (boards[currentPlayerNumber].isInside(pos) == false) {
+        if (!boards[currentPlayerNumber].isInside(pos)) {
             throw new IllegalArgumentException("Position is outside the board");
         }
 

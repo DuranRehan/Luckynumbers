@@ -2,6 +2,7 @@ package g56055.luckynumbers.view;
 
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
+import g56055.luckynumbers.model.State;
 import java.util.Scanner;
 
 /**
@@ -61,7 +62,7 @@ public class MyView implements View {
                 System.out.print("  " + GetTileInInt(new Position(row, col)));
                 System.out.print("   ");
             }
-            System.out.println("|");
+            System.out.println("");
         }
     }
 
@@ -85,15 +86,20 @@ public class MyView implements View {
      */
     private void displayBottomFrame() {
         System.out.println("  #========================#");
+        if (game.getState() == State.PLACE_TILE) {
+            System.out.println("Picked tile : "
+                    + game.getPickedTile().getValue());
+        }
     }
 
     @Override
     public void displayWinner() {
         System.out.println("#========================#");
-        System.out.println("#                        #");
-        System.out.println("#  And the winner is ?!  #");
-        System.out.println("#  " + game.getWinner() + "#");
-        System.out.println("#                        #");
+        System.out.println("#                        ");
+        System.out.println("#  And the winner is ?!  ");
+        System.out.println("#                        ");
+        System.out.println("#            " + game.getWinner());
+        System.out.println("#  WellPlay !            ");
         System.out.println("#========================#");
     }
 
@@ -111,14 +117,19 @@ public class MyView implements View {
     @Override
     public Position askPosition() {
         System.out.println("[CHOOSE] Which row : ");
-        int row = reading_int_Robust();
+        int row = reading_int_Robust() - 1;
         System.out.println("[CHOOSE] Which column : ");
-        int col = reading_int_Robust();
+        int col = reading_int_Robust() - 1;
         Position pos = new Position(row, col);
-        if (!game.isInside(pos)) {
-            displayError("Position is not valide");
+        while (!game.isInside(pos)) {
+            displayError("Position is not valide ! Retry : ");
+            System.out.println("[CHOOSE] Which row : ");
+            row = reading_int_Robust() - 1;
+            System.out.println("[CHOOSE] Which column : ");
+            col = reading_int_Robust() - 1;
+            pos = new Position(row, col);
         }
-        return new Position(row - 1, col - 1);
+        return new Position(row, col);
     }
 
     /**
