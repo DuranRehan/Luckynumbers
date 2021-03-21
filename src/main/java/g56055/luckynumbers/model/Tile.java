@@ -17,7 +17,7 @@ public class Tile {
      *
      * @param value value that will be placed on the tile
      */
-    public Tile(int value) {
+    public Tile(Integer value) {
         this.value = value;
     }
 
@@ -26,7 +26,7 @@ public class Tile {
      *
      * @return the value of tile
      */
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 

@@ -17,7 +17,7 @@ public class Position {
      * @param row the row of the game board
      * @param column the column of the game board
      */
-    public Position(int row, int column) {
+    public Position(Integer row, Integer column) {
         this.row = row;
         this.column = column;
     }
