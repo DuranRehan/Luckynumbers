@@ -16,6 +16,11 @@ public class MyView implements View {
 
     private final Model game;
 
+    /**
+     * Define a console view of a game
+     *
+     * @param game a game of LuckyNumbers
+     */
     public MyView(Model game) {
         this.game = game;
     }
