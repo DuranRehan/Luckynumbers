@@ -5,10 +5,9 @@ import g56055.luckynumbers.model.Position;
 import g56055.luckynumbers.view.View;
 
 /**
+ * Gathers and controls the different elements of the model and the view.
  *
  * @author Duran Rehan g56055
- *
- * Gathers and controls the different elements of the model and the view.
  */
 public class Controller {
 
@@ -33,22 +32,26 @@ public class Controller {
         view.displayWelcome();
         while (true) {
             switch (game.getState()) {
-                case NOT_STARTED -> {
+                case NOT_STARTED:
                     int playerCount = view.askPlayerCount();
                     notStartedStateControls(playerCount);
-                }
-                case PICK_TILE -> {
+                    break;
+
+                case PICK_TILE:
                     game.pickTile();
                     view.displayGame();
-                }
-                case PLACE_TILE -> {
+                    break;
+
+                case PLACE_TILE:
                     Position pos = view.askPosition();
                     placeTileState(pos);
-                }
-                case TURN_END ->
+                    break;
+                case TURN_END:
                     game.nextPlayer();
-                case GAME_OVER ->
+                    break;
+                case GAME_OVER:
                     view.displayWinner();
+                    break;
             }
         }
     }

@@ -3,10 +3,9 @@ package g56055.luckynumbers.model;
 import java.util.Objects;
 
 /**
+ * Define the characteristics of a tile in the game Lucky Numbers
  *
  * @author Duran Rehan g56055
- *
- * Define the characteristics of a tile in the game Lucky Numbers
  */
 public class Tile {
 
@@ -17,7 +16,7 @@ public class Tile {
      *
      * @param value value that will be placed on the tile
      */
-    public Tile(Integer value) {
+    public Tile(int value) {
         this.value = value;
     }
 
@@ -26,16 +25,10 @@ public class Tile {
      *
      * @return the value of tile
      */
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
-    /**
-     * Checks if the value of the tile is equal to the value of another tile
-     * using a hashCode
-     *
-     * @return a certain hash code
-     */
     @Override
     public int hashCode() {
         return Objects.hash(value);

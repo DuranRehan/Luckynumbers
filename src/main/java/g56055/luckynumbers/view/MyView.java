@@ -6,11 +6,11 @@ import g56055.luckynumbers.model.State;
 import java.util.Scanner;
 
 /**
+ * Gather the necessary elements for the game view and implement the console
+ * view
  *
  * @author Duran Rehan g56055
  *
- * Gather the necessary elements for the game view and implement the console
- * view
  */
 public class MyView implements View {
 
@@ -36,7 +36,7 @@ public class MyView implements View {
 
     @Override
     public void displayGame() {
-        int player = game.getCurrentPlayerNumber();
+        int player = game.getCurrentPlayerNumber() + 1;
         System.out.println("Board of player " + player);
         displayUpperFrame();
         displayBodyBoard();
@@ -64,7 +64,7 @@ public class MyView implements View {
         for (int row = 0; row < sizeBoard; row++) {
             System.out.print(row + 1 + " |");
             for (int col = 0; col < sizeBoard; col++) {
-                System.out.print("  " + GetTileInInt(new Position(row, col)));
+                System.out.print("  " + getTileInInt(new Position(row, col)));
                 System.out.print("   ");
             }
             System.out.println("");
@@ -78,7 +78,7 @@ public class MyView implements View {
      * @param pos position on the game board
      * @return the value of the tile at certain position
      */
-    private int GetTileInInt(Position pos) {
+    private int getTileInInt(Position pos) {
         int player = game.getCurrentPlayerNumber();
         if (game.getTile(player, pos) == null) {
             return 0;

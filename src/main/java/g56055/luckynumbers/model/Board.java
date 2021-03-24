@@ -3,17 +3,16 @@ package g56055.luckynumbers.model;
 import java.util.Arrays;
 
 /**
+ * Define the game board on which the player will play
  *
  * @author Duran Rehan g56055
- *
- * Define the game board on which the player will play
  */
 public class Board {
 
     private Tile[][] tiles;
 
     /**
-     * define a game board with a given size by the getSize method
+     * define a empty game board with a size of 4 x 4
      */
     public Board() {
         int size = getSize();
@@ -25,7 +24,7 @@ public class Board {
      *
      * @return the size of game board
      */
-    public Integer getSize() {
+    public int getSize() {
         return 4;
     }
 
@@ -33,14 +32,12 @@ public class Board {
      * Check if the given position is inside the game board
      *
      * @param pos position to check
-     * @return true if the position is inside the board false otherwise
+     * @return true if the position is inside the board, false otherwise
      */
     public boolean isInside(Position pos) {
-        boolean testRow = pos.getRow() <= getSize() - 1
-                && pos.getRow() >= 0;
-        boolean testColumn = pos.getColumn() <= getSize() - 1
-                && pos.getColumn() >= 0;
-        return testRow && testColumn;
+        return (pos.getRow() <= getSize() - 1 && pos.getRow() >= 0)
+                && (pos.getColumn() <= getSize() - 1 && pos.getColumn() >= 0);
+
     }
 
     /**
@@ -62,15 +59,7 @@ public class Board {
      * @return true if the tile can be placed, false otherwise
      */
     public boolean canBePut(Tile tile, Position pos) {
-        if (emptyBoard()) {
-            return true;
-        }
-        if (tile == null && isRespectingRules(tile, pos)) {
-            return true;
-        } else {
-
-            return isRespectingRules(tile, pos);
-        }
+        return isRespectingRules(tile, pos);
     }
 
     /**
@@ -86,19 +75,13 @@ public class Board {
         int lg = pos.getRow();
         int col = pos.getColumn() + 1;
         Position posCandidate = new Position(lg, col);
-        boolean inside = isInside(posCandidate);
-        while (inside) {
+        while (isInside(posCandidate)) {
             if (tiles[lg][col] == null) {
                 posCandidate = new Position(lg, col + 1);
                 col += 1;
             } else {
-                if (tiles[lg][col].getValue() <= tile.getValue()) {
-                    return false;
-                }
-                posCandidate = new Position(lg, col + 1);
-                col += 1;
+                return tiles[lg][col].getValue() > tile.getValue();
             }
-            inside = isInside(posCandidate);
         }
         return true;
     }
@@ -116,19 +99,13 @@ public class Board {
         int lg = pos.getRow();
         int col = pos.getColumn() - 1;
         Position posCandidate = new Position(lg, col);
-        boolean inside = isInside(posCandidate);
-        while (inside) {
+        while (isInside(posCandidate)) {
             if (tiles[lg][col] == null) {
                 posCandidate = new Position(lg, col - 1);
                 col -= 1;
             } else {
-                if (tiles[lg][col].getValue() >= tile.getValue()) {
-                    return false;
-                }
-                posCandidate = new Position(lg, col - 1);
-                col -= 1;
+                return tiles[lg][col].getValue() < tile.getValue();
             }
-            inside = isInside(posCandidate);
         }
         return true;
     }
@@ -146,19 +123,13 @@ public class Board {
         int lg = pos.getRow() + 1;
         int col = pos.getColumn();
         Position posCandidate = new Position(lg, col);
-        boolean inside = isInside(posCandidate);
-        while (inside) {
+        while (isInside(posCandidate)) {
             if (tiles[lg][col] == null) {
                 posCandidate = new Position(lg + 1, col);
                 lg += 1;
             } else {
-                if (tiles[lg][col].getValue() <= tile.getValue()) {
-                    return false;
-                }
-                posCandidate = new Position(lg + 1, col);
-                lg += 1;
+                return tiles[lg][col].getValue() > tile.getValue();
             }
-            inside = isInside(posCandidate);
         }
         return true;
     }
@@ -176,34 +147,12 @@ public class Board {
         int lg = pos.getRow() - 1;
         int col = pos.getColumn();
         Position posCandidate = new Position(lg, col);
-        boolean inside = isInside(posCandidate);
-        while (inside) {
+        while (isInside(posCandidate)) {
             if (tiles[lg][col] == null) {
                 posCandidate = new Position(lg - 1, col);
                 lg -= 1;
             } else {
-                if (tiles[lg][col].getValue() >= tile.getValue()) {
-                    return false;
-                }
-                posCandidate = new Position(lg - 1, col);
-                lg -= 1;
-            }
-            inside = isInside(posCandidate);
-        }
-        return true;
-    }
-
-    /**
-     * Check if the game board is empty or not
-     *
-     * @return true if the game board is empty
-     */
-    private boolean emptyBoard() {
-        for (Tile[] lg : tiles) {
-            for (Tile column : lg) {
-                if (column != null) {
-                    return false;
-                }
+                return tiles[lg][col].getValue() < tile.getValue();
             }
         }
         return true;

@@ -3,11 +3,10 @@ package g56055.luckynumbers.model;
 import static g56055.luckynumbers.model.State.*;
 
 /**
- *
- * @author Duran Rehan g56055
- *
  * Gather the necessary elements for the game and implement the different stages
  * of the game.
+ *
+ * @author Duran Rehan g56055
  */
 public class Game implements Model {
 
@@ -47,7 +46,7 @@ public class Game implements Model {
             throw new IllegalStateException("Not PICK_TILE");
         }
         this.state = PLACE_TILE;
-        int nombreAleatoire = 1 + (int) (Math.random() * (20 + 1));
+        int nombreAleatoire = 1 + (int) (Math.random() * 20);
         this.pickedTile = new Tile(nombreAleatoire);
         return this.pickedTile;
     }
@@ -82,12 +81,7 @@ public class Game implements Model {
         if (!canTileBePut(pos)) {
             throw new IllegalArgumentException("Tile cannot be place !");
         }
-        if(getTile(currentPlayerNumber, pos) != null) {
-            boards[currentPlayerNumber].put(pickedTile, pos);
-        } else {
-            boards[currentPlayerNumber].put(null, pos);
-            boards[currentPlayerNumber].put(pickedTile, pos);
-        }
+        boards[currentPlayerNumber].put(pickedTile, pos);
         if (boards[currentPlayerNumber].isFull()) {
             this.state = GAME_OVER;
         } else {

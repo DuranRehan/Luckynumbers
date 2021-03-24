@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package g56055.luckynumbers.view;
 
 import g56055.luckynumbers.model.Position;
 
 /**
- *
+ * Interface for the game view.
+ * 
  * @author Duran Rehan g56055
- *
- * Interface for the Game view.
  */
 public interface View {
 
