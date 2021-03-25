@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class Tile {
 
-    private final int value;
+    private int value;
 
     /**
      * Define a tile with a specific value
@@ -26,7 +26,7 @@ public class Tile {
      * @return the value of tile
      */
     public int getValue() {
-        return value;
+        return this.value;
     }
 
     @Override

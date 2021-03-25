@@ -1,7 +1,5 @@
 package g56055.luckynumbers.model;
 
-import java.util.Arrays;
-
 /**
  * Define the game board on which the player will play
  *

@@ -2,6 +2,7 @@ package g56055.luckynumbers.controller;
 
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
+import g56055.luckynumbers.model.State;
 import g56055.luckynumbers.view.View;
 
 /**
@@ -11,8 +12,8 @@ import g56055.luckynumbers.view.View;
  */
 public class Controller {
 
-    private final Model game;
-    private final View view;
+    private Model game;
+    private View view;
 
     /**
      * Define a game with its view
@@ -34,7 +35,7 @@ public class Controller {
             switch (game.getState()) {
                 case NOT_STARTED:
                     int playerCount = view.askPlayerCount();
-                    notStartedStateControls(playerCount);
+                    game.start(playerCount);
                     break;
 
                 case PICK_TILE:
@@ -42,9 +43,9 @@ public class Controller {
                     view.displayGame();
                     break;
 
-                case PLACE_TILE:
+                case PLACE_TILE:                   
                     Position pos = view.askPosition();
-                    placeTileState(pos);
+                    game.putTile(pos);
                     break;
                 case TURN_END:
                     game.nextPlayer();
@@ -53,36 +54,6 @@ public class Controller {
                     view.displayWinner();
                     break;
             }
-        }
-    }
-
-    /**
-     * Control the beginning state of the LuckyNumbers game
-     *
-     * @param playerCount Number of player in the game
-     */
-    private void notStartedStateControls(int playerCount) {
-        try {
-            game.start(playerCount);
-        } catch (IllegalArgumentException e) {
-            view.displayError("The game required min 2 players and max 4 !");
-        }
-    }
-
-    /**
-     * Control the placement of a tile during a game of Lucky Numbers
-     *
-     * @param pos position of the tile
-     */
-    private void placeTileState(Position pos) {
-        try {
-            game.putTile(pos);
-        } catch (IllegalArgumentException e) {
-            while (!game.canTileBePut(pos)) {
-                view.displayError("The tile violated the rule !");
-                pos = view.askPosition();
-            }
-            game.putTile(pos);
         }
     }
 }

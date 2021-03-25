@@ -100,11 +100,13 @@ public class MyView implements View {
     @Override
     public void displayWinner() {
         System.out.println("#========================#");
-        System.out.println("#                        ");
-        System.out.println("#  And the winner is ?!  ");
-        System.out.println("#                        ");
-        System.out.println("#            " + game.getWinner());
-        System.out.println("#  WellPlay !            ");
+        System.out.println("#                        #");
+        System.out.println("#  And the winner is ?!  #");
+        System.out.println("#                        #");
+        System.out.println("#        Player :  " + (game.getWinner() + 1)
+                + "     #");
+        System.out.println("#                        #");
+        System.out.println("#        Well Play !     #");
         System.out.println("#========================#");
     }
 
@@ -116,7 +118,12 @@ public class MyView implements View {
     @Override
     public int askPlayerCount() {
         System.out.println("Enter with how many players would you play : ");
-        return reading_int_Robust();
+        int playerCount = reading_int_Robust();
+        while (playerCount > 4 || playerCount < 2) {
+            System.out.println("[ERROR] The game required min 2 players and max 4 !");
+            playerCount = askPlayerCount();
+        }
+        return playerCount;
     }
 
     @Override
@@ -126,7 +133,7 @@ public class MyView implements View {
         System.out.println("[CHOOSE] Which column : ");
         int col = reading_int_Robust() - 1;
         Position pos = new Position(row, col);
-        while (!game.isInside(pos)) {
+        while (!game.isInside(pos) || !game.canTileBePut(pos)) {
             displayError("Position is not valide ! Retry : ");
             System.out.println("[CHOOSE] Which row : ");
             row = reading_int_Robust() - 1;

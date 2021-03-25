@@ -7,8 +7,8 @@ package g56055.luckynumbers.model;
  */
 public class Position {
 
-    private final int row;
-    private final int column;
+    private  int row;
+    private  int column;
 
     /**
      * Define a position on the game board
