@@ -43,7 +43,7 @@ public class Controller {
                     view.displayGame();
                     break;
 
-                case PLACE_TILE:                   
+                case PLACE_TILE:
                     Position pos = view.askPosition();
                     game.putTile(pos);
                     break;
@@ -52,6 +52,7 @@ public class Controller {
                     break;
                 case GAME_OVER:
                     view.displayWinner();
+                    game.start(view.askPlayerCount());
                     break;
             }
         }

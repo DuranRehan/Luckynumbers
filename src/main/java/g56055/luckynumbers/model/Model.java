@@ -1,4 +1,5 @@
 package g56055.luckynumbers.model;
+
 /**
  * Interface for the Game model.
  *
@@ -20,23 +21,22 @@ public interface Model {
      * @throws IllegalStateException if called when state is not NOT_STARTED nor
      * GAME_OVER.
      */
-     void start(int playerCount);
+    void start(int playerCount);
 
     /**
-     * Give the size of the boards.
-     * We suppose that all boards are squares and of the same size.
-     * So this is both number of lines and number of columns.
-     * With the official rules, this should be 4
-     * but this must not be assumed and this methode must be used
-     * instead of hardcoding that value elsewhere in the code.
+     * Give the size of the boards. We suppose that all boards are squares and
+     * of the same size. So this is both number of lines and number of columns.
+     * With the official rules, this should be 4 but this must not be assumed
+     * and this methode must be used instead of hardcoding that value elsewhere
+     * in the code.
+     *
      * @return the size of the board.
      */
     int getBoardSize();
 
     /**
      * The current player pick a tile. In this version of the game, a random one
-     * is created.
-     * State becomes PLACE_TILE.
+     * is created. State becomes PLACE_TILE.
      *
      * @return the picked tile
      * @throws IllegalStateException if called when state is not PICK_TILE
@@ -45,8 +45,8 @@ public interface Model {
 
     /**
      * Put a tile at the given position. Put the previously picked tile of the
-     * current player at the given position on its board.
-     * State becomes TURN_END.
+     * current player at the given position on its board. State becomes
+     * TURN_END.
      *
      * @param pos where to put the tile.
      * @throws IllegalArgumentException if the tile can't be put on that
@@ -58,8 +58,7 @@ public interface Model {
 
     /**
      * Change current player. The next player becomes the current one. The order
-     * is : 0, 1, 2, 3 and again 0, 1, ...
-     * State becomes PICK_TILE
+     * is : 0, 1, 2, 3 and again 0, 1, ... State becomes PICK_TILE
      *
      * @throws IllegalStateException if called when state is not TURN_END
      */

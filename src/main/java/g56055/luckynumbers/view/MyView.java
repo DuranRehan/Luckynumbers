@@ -120,7 +120,7 @@ public class MyView implements View {
         System.out.println("Enter with how many players would you play : ");
         int playerCount = reading_int_Robust();
         while (playerCount > 4 || playerCount < 2) {
-            System.out.println("[ERROR] The game required min 2 players and max 4 !");
+            displayError("The game required min 2 players and max 4 !");
             playerCount = askPlayerCount();
         }
         return playerCount;
