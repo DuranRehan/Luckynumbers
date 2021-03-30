@@ -1,9 +1,9 @@
 package g56055.luckynumbers.model;
 
 /**
- *
+ * Different possible states of the game
+ * 
  * @author Duran Rehan g56055
- *
  */
 public enum State {
 

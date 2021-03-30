@@ -4,7 +4,7 @@ import g56055.luckynumbers.model.Position;
 
 /**
  * Interface for the game view.
- * 
+ *
  * @author Duran Rehan g56055
  */
 public interface View {
@@ -20,7 +20,7 @@ public interface View {
     void displayWelcome();
 
     /**
-     * Manage the display of game status
+     * Manage the display of game boards
      * <ul>
      * <li>Current player</li>
      * <li>Board of the current player</li>
@@ -49,13 +49,11 @@ public interface View {
     int askPlayerCount();
 
     /**
-     * asks the user to enter a
+     * asks the user to enter a valide
      * <ul>
      * <li>line number</li>
      * <li>Column number</li>
      * </ul>
-     *
-     * @throws IllegalArgumentException if Position is not valide
      *
      * @return One row and one column as a position.
      */

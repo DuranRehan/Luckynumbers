@@ -48,11 +48,12 @@ public class MyView implements View {
      */
     private void displayUpperFrame() {
         int sizeBoard = game.getBoardSize();
+        System.out.print("   ");
         for (int i = 1; i <= sizeBoard; i++) {
-            System.out.print("     " + i);
+            System.out.printf("    %d " , i);
         }
         System.out.println("");
-        System.out.println("  #========================#");
+        System.out.println("  #===========================#");
 
     }
 
@@ -64,10 +65,11 @@ public class MyView implements View {
         for (int row = 0; row < sizeBoard; row++) {
             System.out.print(row + 1 + " |");
             for (int col = 0; col < sizeBoard; col++) {
-                System.out.print("  " + getTileInInt(new Position(row, col)));
-                System.out.print("   ");
+                System.out.printf("   %2d " , 
+                        getTileInInt(new Position(row, col)));
+                
             }
-            System.out.println("");
+            System.out.println("   |");
         }
     }
 
@@ -90,7 +92,7 @@ public class MyView implements View {
      * Display the bottom frame of the game board
      */
     private void displayBottomFrame() {
-        System.out.println("  #========================#");
+        System.out.println("  #===========================#");
         if (game.getState() == State.PLACE_TILE) {
             System.out.println("Picked tile : "
                     + game.getPickedTile().getValue());

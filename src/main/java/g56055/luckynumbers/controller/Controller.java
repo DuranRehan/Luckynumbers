@@ -2,7 +2,6 @@ package g56055.luckynumbers.controller;
 
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
-import g56055.luckynumbers.model.State;
 import g56055.luckynumbers.view.View;
 
 /**

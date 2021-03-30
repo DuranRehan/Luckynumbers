@@ -7,10 +7,9 @@ import g56055.luckynumbers.view.MyView;
 import g56055.luckynumbers.view.View;
 
 /**
+ * Main class of the LuckyNumbers Games !
  *
  * @author Duran Rehan g56055
- *
- * Main class of the LuckyNumbers Games !
  */
 public class LuckyNumbers {
 
