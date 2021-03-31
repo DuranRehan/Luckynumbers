@@ -3,7 +3,7 @@ package g56055.luckynumbers.model;
 import java.util.Objects;
 
 /**
- * Define the characteristics of a tile in the game Lucky Numbers
+ * Define the characteristics of a tile in the Lucky Numbers game
  *
  * @author Duran Rehan g56055
  */

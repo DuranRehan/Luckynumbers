@@ -24,7 +24,7 @@ public enum State {
      */
     GAME_OVER,
     /**
-     * Game turn rotation
+     * End of the turn of a player
      */
     TURN_END
 }

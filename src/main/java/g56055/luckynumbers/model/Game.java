@@ -41,7 +41,7 @@ public class Game implements Model {
     }
 
     @Override
-     public Tile pickTile() {
+    public Tile pickTile() {
         if (state != PICK_TILE) {
             throw new IllegalStateException("Not PICK_TILE");
         }
@@ -58,7 +58,7 @@ public class Game implements Model {
      * @param value The value we want to place
      * @return the picked tile
      */
-    public Tile pickTile(int value) {
+    Tile pickTile(int value) {
         if (state != PICK_TILE) {
             throw new IllegalStateException("Not PICK_TILE");
         }
