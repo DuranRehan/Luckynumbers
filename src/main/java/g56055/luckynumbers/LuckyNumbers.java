@@ -18,5 +18,9 @@ public class LuckyNumbers {
         View view = new MyView(game);
         Controller controller = new Controller(game, view);
         controller.play();
+
+        /*
+        Fin Iteration 1.
+         */
     }
 }
