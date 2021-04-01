@@ -50,7 +50,7 @@ public class MyView implements View {
         int sizeBoard = game.getBoardSize();
         System.out.print("   ");
         for (int i = 1; i <= sizeBoard; i++) {
-            System.out.printf("    %d " , i);
+            System.out.printf("    %d ", i);
         }
         System.out.println("");
         System.out.println("  #===========================#");
@@ -65,9 +65,9 @@ public class MyView implements View {
         for (int row = 0; row < sizeBoard; row++) {
             System.out.print(row + 1 + " |");
             for (int col = 0; col < sizeBoard; col++) {
-                System.out.printf("   %2d " , 
+                System.out.printf("   %2d ",
                         getTileInInt(new Position(row, col)));
-                
+
             }
             System.out.println("   |");
         }

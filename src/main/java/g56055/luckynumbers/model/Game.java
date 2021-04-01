@@ -56,7 +56,7 @@ public class Game implements Model {
      * tests.
      *
      * @param value The value we want to place
-     * @return the picked tile
+     * @return The tile with the chosen value
      */
     Tile pickTile(int value) {
         if (state != PICK_TILE) {
