@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
- * @author MCD <mcodutti@he2b.be> 
+ * @author MCD <mcodutti@he2b.be>
  * @author Duran Rehan
- * 
+ *
  * Test class for Game class
  */
 public class GameTest {
@@ -37,7 +37,7 @@ public class GameTest {
     }
 
     /* Play a game till the end */
-    private void fullPlay() {
+    private int fullPlay() {
         game.start(2);
         int value = 1;
         int line = 0;
@@ -56,7 +56,9 @@ public class GameTest {
             }
         }
         game.pickTile(20);
+        int currentPlayer = game.getCurrentPlayerNumber();
         game.putTile(new Position(line, col));
+        return currentPlayer;
     }
 
     @Test
@@ -115,29 +117,22 @@ public class GameTest {
     @Test
     public void pickTile_change_state_in_PLACE_TILE_ok() {
         game.start(2);
-        game.pickTile(4);
+        game.pickTile();
         assertEquals(State.PLACE_TILE, game.getState());
     }
 
     @Test
     public void pickTile_when_state_is_not_ok() {
         game.start(2);
-        game.pickTile(5);
+        game.pickTile();
         assertThrows(IllegalStateException.class,
-                () -> game.pickTile(5));
+                () -> game.pickTile());
     }
 
     @Test
-    public void pickTile_value_in_tile_is_Equal_to_another() {
+    public void pickTile_check_if_pickTile_is_the_pickedTile() {
         game.start(2);
-        Tile tile = game.pickTile(4);
-        assertEquals(new Tile(4), tile);
-    }
-
-    @Test
-    public void pickTile_check_if_pickTile_is_the_pickTile() {
-        game.start(2);
-        Tile Tile_candidate = game.pickTile(4);
+        Tile Tile_candidate = game.pickTile();
         assertEquals(Tile_candidate, game.getPickedTile());
     }
 
@@ -281,6 +276,103 @@ public class GameTest {
                 () -> game.canTileBePut(new Position(10, 1)));
     }
 
+    @Test
+    public void canTileBePut_when_Empty_Board() {
+        game.start(2);
+        game.pickTile(5);
+        assertTrue(game.canTileBePut(new Position(1, 1)));
+    }
+
+    /*Play a complete round*/
+    private void playOneRound() {
+        game.pickTile(0);
+        game.putTile(new Position(0, 0));
+        game.nextPlayer();
+    }
+
+    @Test
+    public void canTileBePut_when_respect_rule() {
+        game.start(2);
+        game.pickTile(1);
+        game.putTile(new Position(0, 1));
+        game.nextPlayer();
+        playOneRound();
+        game.pickTile(2);
+        assertTrue(game.canTileBePut(new Position(0, 2)));
+    }
+
+    @Test
+    public void canTileBePut_when_respect_rule_And_occupied() {
+        game.start(2);
+        game.pickTile(1);
+        game.putTile(new Position(0, 1));
+        game.nextPlayer();
+        playOneRound();
+        
+        game.pickTile(5);
+        game.putTile(new Position(0, 2));
+        game.nextPlayer();
+        playOneRound();
+        
+        game.pickTile(2);
+        assertTrue(game.canTileBePut(new Position(0, 2)));
+    }
+
+    @Test
+    public void canTileBePut_when_not_respect_rule() {
+        game.start(2);
+        game.pickTile(10);
+        game.putTile(new Position(0, 1));
+        game.nextPlayer();
+        playOneRound();
+        game.pickTile(2);
+        assertFalse(game.canTileBePut(new Position(0, 2)));
+    }
+
+    @Test
+    public void canTileBePut_when_same_value_right() {
+        game.start(2);
+        game.pickTile(1);
+        game.putTile(new Position(0, 1));
+        game.nextPlayer();
+        playOneRound();
+        game.pickTile(1);
+        assertFalse(game.canTileBePut(new Position(0, 2)));
+    }
+
+    @Test
+    public void canTileBePut_when_same_value_down() {
+        game.start(2);
+        game.pickTile(1);
+        game.putTile(new Position(0, 1));
+        game.nextPlayer();
+        playOneRound();
+        game.pickTile(1);
+        assertFalse(game.canTileBePut(new Position(1, 1)));
+    }
+
+    @Test
+    public void canTileBePut_when_same_value_left() {
+        game.start(2);
+        game.pickTile(1);
+        game.putTile(new Position(0, 1));
+        game.nextPlayer();
+        playOneRound();
+        game.pickTile(1);
+        assertFalse(game.canTileBePut(new Position(0, 0)));
+    }
+
+    @Test
+    public void canTileBePut_when_same_value_up() {
+        game.start(2);
+        game.pickTile(1);
+        game.putTile(new Position(1, 1));
+        game.nextPlayer();
+        playOneRound();
+        game.pickTile(1);
+        assertFalse(game.canTileBePut(new Position(0, 1)));
+    }
+
     /* ====================
          Tests for getTile()
        ======================*/
@@ -325,5 +417,17 @@ public class GameTest {
         game.start(2);
         assertThrows(IllegalStateException.class,
                 () -> game.getWinner());
+    }
+    
+    @Test
+    public void getWinner_state_is_ok() {
+        fullPlay();
+        assertTrue(game.getState() == State.GAME_OVER);
+    }
+    
+    @Test 
+    public void getWinner_winner_is_the_right_player() {
+        int winner = fullPlay();
+        assertTrue(winner == game.getWinner());
     }
 }

@@ -1,10 +1,9 @@
 package g56055.luckynumbers.view;
 
+import static g56055.luckynumbers.utils.JavaUtils.reading_int_Robust;
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
 import g56055.luckynumbers.model.State;
-import java.util.Scanner;
-
 /**
  * Gather the necessary elements for the game view and implement the console
  * view
@@ -136,7 +135,11 @@ public class MyView implements View {
         int col = reading_int_Robust() - 1;
         Position pos = new Position(row, col);
         while (!game.isInside(pos) || !game.canTileBePut(pos)) {
-            displayError("Position is not valide ! Retry : ");
+            if (!game.isInside(pos)) {
+                displayError("Position is not inside ! Retry : ");
+            } else {
+                displayError("The tile cannot be put here ! Retry : ");
+            }
             System.out.println("[CHOOSE] Which row : ");
             row = reading_int_Robust() - 1;
             System.out.println("[CHOOSE] Which column : ");
@@ -146,17 +149,4 @@ public class MyView implements View {
         return new Position(row, col);
     }
 
-    /**
-     * Robustly read an integer entered on keyboard
-     *
-     * @return the integer entered on the keyboard
-     */
-    private int reading_int_Robust() {
-        Scanner kbd = new Scanner(System.in);
-        while (!kbd.hasNextInt()) {
-            System.out.println("Number is not a Integer : ");
-            kbd.next();
-        }
-        return kbd.nextInt();
-    }
 }

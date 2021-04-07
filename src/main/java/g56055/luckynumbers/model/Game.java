@@ -1,6 +1,7 @@
 package g56055.luckynumbers.model;
 
 import static g56055.luckynumbers.model.State.*;
+import g56055.luckynumbers.utils.JavaUtils;
 
 /**
  * Gather the necessary elements for the game and implement the different stages
@@ -17,7 +18,8 @@ public class Game implements Model {
     private Tile pickedTile;
 
     /**
-     * Define a game to its initial state
+     * Define a game to its initial state, 
+     * in other words, the game has not yet started
      */
     public Game() {
         this.state = NOT_STARTED;
@@ -46,8 +48,8 @@ public class Game implements Model {
             throw new IllegalStateException("Not PICK_TILE");
         }
         this.state = PLACE_TILE;
-        int nombreAleatoire = 1 + (int) (Math.random() * 20);
-        this.pickedTile = new Tile(nombreAleatoire);
+        int rdm = JavaUtils.rdmNumber(1, 20);
+        this.pickedTile = new Tile(rdm);
         return this.pickedTile;
     }
 
@@ -95,10 +97,10 @@ public class Game implements Model {
             throw new IllegalStateException(" TURN is not END");
         }
         state = PICK_TILE;
-        if (currentPlayerNumber >= playerCount - 1) {
+        if (currentPlayerNumber == playerCount - 1) {
             currentPlayerNumber = 0;
         } else {
-            currentPlayerNumber = currentPlayerNumber + 1;
+            currentPlayerNumber++;
         }
     }
 
