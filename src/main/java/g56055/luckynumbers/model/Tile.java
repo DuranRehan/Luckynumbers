@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Tile {
 
     private int value;
+    private boolean faceUp = false;
 
     /**
      * Define a tile with a specific value
@@ -27,6 +28,23 @@ public class Tile {
      */
     public int getValue() {
         return this.value;
+    }
+    
+    /**
+     * Check if the tile is returned or not
+     * 
+     * @return true if the tile is returned, false otherwise
+     */
+    public boolean isFaceUp() {
+        return faceUp;
+    }
+    
+    /**
+     * Make the tile visible
+     * 
+     */
+    void flipFaceUp() {
+        this.faceUp = true;
     }
 
     @Override
