@@ -2,6 +2,8 @@ package g56055.luckynumbers.controller;
 
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
+import g56055.luckynumbers.model.Tile;
+import g56055.luckynumbers.utils.JavaUtils;
 import g56055.luckynumbers.view.View;
 
 /**
@@ -38,11 +40,13 @@ public class Controller {
                     break;
 
                 case PICK_TILE:
-                    game.pickTile();
-                    view.displayGame();
+                    view.askDownOrUp();
                     break;
-
+                case PLACE_OR_DROP_TILE:
+                    Place_Or_Drop_tile_control();
+                    break;
                 case PLACE_TILE:
+                    view.displayGame();
                     Position pos = view.askPosition();
                     game.putTile(pos);
                     break;
@@ -54,6 +58,18 @@ public class Controller {
                     game.start(view.askPlayerCount());
                     break;
             }
+        }
+    }
+    /**
+     * Controls state actions of PLACE_OR_DROP_TILE
+     */
+    private void Place_Or_Drop_tile_control() {
+        view.displayGame();
+        if (view.askDropOrNot()) {
+            game.dropTile();
+        } else {
+            Position pos = view.askPosition();
+            game.putTile(pos);
         }
     }
 }
