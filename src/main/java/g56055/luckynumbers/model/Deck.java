@@ -47,7 +47,6 @@ public class Deck {
      */
     public Tile pickFaceDown() {
         Tile tempTile = faceDownTiles.get(0);
-        faceUpTiles.add(tempTile);
         faceDownTiles.remove(tempTile);
         return tempTile;
     }

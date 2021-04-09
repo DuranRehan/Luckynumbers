@@ -1,7 +1,6 @@
 package g56055.luckynumbers.model;
 
 import static g56055.luckynumbers.model.State.*;
-import java.util.ArrayList;
 import java.util.Collections;
 //import g56055.luckynumbers.utils.JavaUtils;
 import java.util.List;

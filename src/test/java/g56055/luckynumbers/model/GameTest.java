@@ -530,7 +530,7 @@ public class GameTest {
     private void addTilesInFaceUpList(int n) {
         for (int i = 0; i < n; i++) {
             game.pickFaceDownTile();
-            game.putTile(new Position(0, 0));
+            game.dropTile();
             game.nextPlayer();
         }
     }

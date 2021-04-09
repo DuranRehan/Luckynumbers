@@ -22,7 +22,7 @@ public class DeckTest {
          Tests for faceDownCount()
        ========================= */
  /*Turn all tiles face up*/
-    private void flipAllHiddenTiles() {
+    private void removeAllHiddenTiles() {
         int i = deck.faceDownCount();
         while (i > 0) {
             deck.pickFaceDown();
@@ -37,7 +37,7 @@ public class DeckTest {
 
     @Test
     public void faceDownCount_when_all_value_are_visible() {
-        flipAllHiddenTiles();
+        removeAllHiddenTiles();
         assertEquals(0, deck.faceDownCount());
     }
 
@@ -50,17 +50,15 @@ public class DeckTest {
         assertEquals(tile_candidate, deck.pickFaceDown());
     }
 
-    @Test
-    public void pickFaceDown_remove_all_tiles() {
-        flipAllHiddenTiles();
-    }
-
     /* =====================
          Tests for faceUpCount()
        ========================= */
     @Test
     public void faceUpCount_all_tiles_visible() {
-        flipAllHiddenTiles();
+        for(int i = 0 ; i < 40; i++) {
+            Tile tile = new Tile(5);
+            deck.putBack(tile);
+        }
         assertEquals(40, deck.faceUpCount());
     }
 
@@ -104,7 +102,6 @@ public class DeckTest {
     @Test
     public void pickFaceUp_remove_value_correctly() {
         Tile tile_candidate = new Tile(25);
-        flipAllHiddenTiles();
         deck.putBack(tile_candidate);
         deck.pickFaceUp(tile_candidate);
         assertFalse(deck.getAllFaceUp().contains(tile_candidate));
