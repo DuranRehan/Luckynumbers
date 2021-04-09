@@ -1,5 +1,6 @@
 package g56055.luckynumbers.model;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -114,27 +115,27 @@ public class GameTest {
  /* =====================
          Tests for PickTile()
        ===================== */
-    @Test
-    public void pickTile_change_state_in_PLACE_TILE_ok() {
-        game.start(2);
-        game.pickTile();
-        assertEquals(State.PLACE_TILE, game.getState());
-    }
-
-    @Test
-    public void pickTile_when_state_is_not_ok() {
-        game.start(2);
-        game.pickTile();
-        assertThrows(IllegalStateException.class,
-                () -> game.pickTile());
-    }
-
-    @Test
-    public void pickTile_check_if_pickTile_is_the_pickedTile() {
-        game.start(2);
-        Tile Tile_candidate = game.pickTile();
-        assertEquals(Tile_candidate, game.getPickedTile());
-    }
+//    @Test
+//    public void pickTile_change_state_in_PLACE_TILE_ok() {
+//        game.start(2);
+//        game.pickTile();
+//        assertEquals(State.PLACE_TILE, game.getState());
+//    }
+//
+//    @Test
+//    public void pickTile_when_state_is_not_ok() {
+//        game.start(2);
+//        game.pickTile();
+//        assertThrows(IllegalStateException.class,
+//                () -> game.pickTile());
+//    }
+//
+//    @Test
+//    public void pickTile_check_if_pickTile_is_the_pickedTile() {
+//        game.start(2);
+//        Tile Tile_candidate = game.pickTile();
+//        assertEquals(Tile_candidate, game.getPickedTile());
+//    }
 
     /* =====================
          Tests for putTile()
@@ -213,7 +214,7 @@ public class GameTest {
     /* Change current Player n times */
     private int nextCurrentPlayer(int n) {
         for (int i = 0; i < n; i++) {
-            game.pickTile();
+            game.pickFaceDownTile();
             game.putTile(new Position(0, 1));
             game.nextPlayer();
         }
@@ -270,7 +271,7 @@ public class GameTest {
     @Test
     public void canTileBePut_when_position_is_NOT_Ok() {
         game.start(2);
-        game.pickTile();
+        game.pickFaceDownTile();
         game.putTile(new Position(1, 1));
         assertThrows(IllegalStateException.class,
                 () -> game.canTileBePut(new Position(10, 1)));
@@ -308,12 +309,12 @@ public class GameTest {
         game.putTile(new Position(0, 1));
         game.nextPlayer();
         playOneRound();
-        
+
         game.pickTile(5);
         game.putTile(new Position(0, 2));
         game.nextPlayer();
         playOneRound();
-        
+
         game.pickTile(2);
         assertTrue(game.canTileBePut(new Position(0, 2)));
     }
@@ -385,7 +386,7 @@ public class GameTest {
     @Test
     public void getTile_when_position_is_NOT_inside() {
         game.start(2);
-        game.pickTile();
+        game.pickFaceDownTile();
         game.putTile(new Position(1, 1));
         assertThrows(IllegalArgumentException.class,
                 () -> game.getTile(0, new Position(10, 2)));
@@ -394,7 +395,7 @@ public class GameTest {
     @Test
     public void getTile_when_playerNumber_is_outRange() {
         game.start(2);
-        game.pickTile();
+        game.pickFaceDownTile();
         game.putTile(new Position(1, 1));
         assertThrows(IllegalArgumentException.class,
                 () -> game.getTile(5, new Position(1, 2)));
@@ -403,7 +404,7 @@ public class GameTest {
     @Test
     public void getTile_when_playerNumber_is_outRange_lower_0() {
         game.start(2);
-        game.pickTile();
+        game.pickFaceDownTile();
         game.putTile(new Position(1, 1));
         assertThrows(IllegalArgumentException.class,
                 () -> game.getTile(-1, new Position(1, 2)));
@@ -418,16 +419,142 @@ public class GameTest {
         assertThrows(IllegalStateException.class,
                 () -> game.getWinner());
     }
-    
+
     @Test
     public void getWinner_state_is_ok() {
         fullPlay();
         assertTrue(game.getState() == State.GAME_OVER);
     }
-    
-    @Test 
+
+    @Test
     public void getWinner_winner_is_the_right_player() {
         int winner = fullPlay();
         assertTrue(winner == game.getWinner());
+    }
+
+    /* ====================
+         Tests for pickFaceDownTile()
+       ======================*/
+    @Test
+    public void pickFaceDownTile_when_state_not_OK() {
+        assertThrows(IllegalStateException.class,
+                () -> game.pickFaceDownTile());
+    }
+
+    @Test
+    public void pickFaceDownTile_change_state_in_PLACE_OR_DROP_TILE() {
+        game.start(2);
+        game.pickFaceDownTile();
+        assertEquals(State.PLACE_OR_DROP_TILE, game.getState());
+    }
+
+    @Test
+    public void pickFaceDownTile_Tile_is_the_picked_tile() {
+        game.start(2);
+        Tile tile_candidate = game.pickFaceDownTile();
+        assertEquals(game.getPickedTile(), tile_candidate);
+    }
+
+    /* ====================
+         Tests for pickFaceUpTile()
+       ======================*/
+    @Test
+    public void pickFaceUpTile_when_state_not_OK() {
+        assertThrows(IllegalStateException.class,
+                () -> game.pickFaceUpTile(new Tile(5)));
+    }
+
+    @Test
+    public void pickFaceUpTile_change_state_in_PLACE_TILE() {
+        game.start(2);
+        game.pickFaceUpTile(new Tile(5));
+        assertEquals(State.PLACE_TILE, game.getState());
+    }
+
+    @Test
+    public void pickFaceUpTile_Tile_is_the_picked_tile() {
+        game.start(2);
+        Tile tile_candidate = game.pickFaceUpTile(new Tile(5));
+        assertEquals(game.getPickedTile(), tile_candidate);
+    }
+
+    /* ====================
+         Tests for dropTile()
+       ======================*/
+    @Test
+    public void dropTile_when_state_not_OK() {
+        assertThrows(IllegalStateException.class,
+                () -> game.dropTile());
+    }
+
+    @Test
+    public void dropTile_change_state_in_TURN_END() {
+        game.start(2);
+        game.pickFaceDownTile();
+        game.dropTile();
+        assertEquals(State.TURN_END, game.getState());
+    }
+
+    /* ====================
+         Tests for faceDownTileCount()
+       ======================*/
+    @Test
+    public void faceDownTileCount_state_not_ok() {
+        assertThrows(IllegalStateException.class,
+                () -> game.faceDownTileCount());
+    }
+
+    @Test
+    public void faceDownTileCount_all_tile_face_down() {
+        game.start(2);
+        assertEquals(40, game.faceDownTileCount());
+    }
+
+    /* ====================
+         Tests for faceUpTileCount()
+       ======================*/
+    @Test
+    public void faceUpTileCount_state_not_ok() {
+        assertThrows(IllegalStateException.class,
+                () -> game.faceUpTileCount());
+    }
+
+    @Test
+    public void faceUpTileCount_all_tile_face_Up() {
+        game.start(2);
+        addTilesInFaceUpList(40);
+        assertEquals(40, game.faceUpTileCount());
+    }
+    
+    /*Add n values in the face up list*/
+    private void addTilesInFaceUpList(int n) {
+        for (int i = 0; i < n; i++) {
+            game.pickFaceDownTile();
+            game.putTile(new Position(0, 0));
+            game.nextPlayer();
+        }
+    }
+
+    /* ====================
+         Tests for getAllfaceUpTiles()
+       ======================*/
+    @Test
+    public void getAllfaceUpTiles_state_not_ok() {
+        assertThrows(IllegalStateException.class,
+                () -> game.getAllfaceUpTiles());
+    }
+    
+    @Test
+    public void getAllfaceUpTiles_Empty_list() {
+        game.start(2);
+        assertEquals(0, game.getAllfaceUpTiles().size());
+    }
+    
+    @Test
+    public void getAllfaceUpTiles_list_size_equals_count_Face_Up_tiles() {
+        game.start(2);
+        addTilesInFaceUpList(25);
+        int totalFaceUp = game.faceUpTileCount();
+        assertEquals(totalFaceUp, game.getAllfaceUpTiles().size());
     }
 }

@@ -1,7 +1,10 @@
 package g56055.luckynumbers.model;
 
 import static g56055.luckynumbers.model.State.*;
-import g56055.luckynumbers.utils.JavaUtils;
+import java.util.ArrayList;
+import java.util.Collections;
+//import g56055.luckynumbers.utils.JavaUtils;
+import java.util.List;
 
 /**
  * Gather the necessary elements for the game and implement the different stages
@@ -16,10 +19,11 @@ public class Game implements Model {
     private int currentPlayerNumber;
     private Board[] boards;
     private Tile pickedTile;
+    private Deck deck;
 
     /**
-     * Define a game to its initial state, 
-     * in other words, the game has not yet started
+     * Define a game to its initial state, in other words, the game has not yet
+     * started
      */
     public Game() {
         this.state = NOT_STARTED;
@@ -35,6 +39,7 @@ public class Game implements Model {
         }
         state = PICK_TILE;
         this.currentPlayerNumber = 0;
+        this.deck = new Deck(playerCount);
         this.playerCount = playerCount;
         this.boards = new Board[playerCount];
         for (int i = 0; i <= playerCount - 1; i++) {
@@ -42,17 +47,16 @@ public class Game implements Model {
         }
     }
 
-    @Override
-    public Tile pickTile() {
-        if (state != PICK_TILE) {
-            throw new IllegalStateException("Not PICK_TILE");
-        }
-        this.state = PLACE_TILE;
-        int rdm = JavaUtils.rdmNumber(1, 20);
-        this.pickedTile = new Tile(rdm);
-        return this.pickedTile;
-    }
-
+//    @Override
+//    public Tile pickTile() {
+//        if (state != PICK_TILE) {
+//            throw new IllegalStateException("Not PICK_TILE");
+//        }
+//        this.state = PLACE_TILE;
+//        int rdm = JavaUtils.rdmNumber(1, 20);
+//        this.pickedTile = new Tile(rdm);
+//        return this.pickedTile;
+//    }
     /**
      * Pick a tile with the given value. Should be used only for the JUnit
      * tests.
@@ -77,17 +81,20 @@ public class Game implements Model {
 
     @Override
     public void putTile(Position pos) {
-        if (this.state != PLACE_TILE) {
-            throw new IllegalStateException("IS NOT PLACE_TILE STATE ");
-        }
-        if (!canTileBePut(pos)) {
-            throw new IllegalArgumentException("Tile cannot be place !");
-        }
-        boards[currentPlayerNumber].put(pickedTile, pos);
-        if (boards[currentPlayerNumber].isFull()) {
-            this.state = GAME_OVER;
+        if (this.state == PLACE_TILE
+                || this.state == State.PLACE_OR_DROP_TILE) {
+            if (!canTileBePut(pos)) {
+                throw new IllegalArgumentException("Tile cannot be place !");
+            }
+            boards[currentPlayerNumber].put(pickedTile, pos);
+            if (boards[currentPlayerNumber].isFull()) {
+                this.state = GAME_OVER;
+            } else {
+                this.state = TURN_END;
+            }
         } else {
-            this.state = TURN_END;
+            throw new IllegalStateException("Is not the right State"
+                    + getState());
         }
     }
 
@@ -129,10 +136,12 @@ public class Game implements Model {
 
     @Override
     public Tile getPickedTile() {
-        if (state != PLACE_TILE) {
+        if (this.state == PLACE_TILE
+                || this.state == State.PLACE_OR_DROP_TILE) {
+            return pickedTile;
+        } else {
             throw new IllegalStateException("NOT PLACE_TILE");
         }
-        return pickedTile;
     }
 
     @Override
@@ -142,14 +151,15 @@ public class Game implements Model {
 
     @Override
     public boolean canTileBePut(Position pos) {
-        if (state != PLACE_TILE) {
-            throw new IllegalStateException("IS NOT PLACE TILE");
+        if (state == PLACE_TILE || state == PLACE_OR_DROP_TILE) {
+            if (!boards[currentPlayerNumber].isInside(pos)) {
+                throw new IllegalArgumentException("Position is outside "
+                        + "the board");
+            }
+            return boards[currentPlayerNumber].canBePut(pickedTile, pos);
+        } else {
+            throw new IllegalStateException("IS NOT PLACE TILE OR PLACE_DROP");
         }
-        if (!boards[currentPlayerNumber].isInside(pos)) {
-            throw new IllegalArgumentException("Position is outside the board");
-        }
-
-        return boards[currentPlayerNumber].canBePut(pickedTile, pos);
     }
 
     @Override
@@ -171,5 +181,60 @@ public class Game implements Model {
         }
 
         return currentPlayerNumber;
+    }
+
+    @Override
+    public Tile pickFaceDownTile() {
+        if (state != PICK_TILE) {
+            throw new IllegalStateException("Is not PICK_TILE !" + getState());
+        }
+        state = PLACE_OR_DROP_TILE;
+        pickedTile = deck.pickFaceDown();
+        return pickedTile;
+    }
+
+    @Override
+    public Tile pickFaceUpTile(Tile tile) {
+        if (state != PICK_TILE) {
+            throw new IllegalStateException("Is not PICK_TILE !" + getState());
+        }
+        state = PLACE_TILE;
+        deck.pickFaceUp(tile);
+        pickedTile = tile;
+        return pickedTile;
+    }
+
+    @Override
+    public void dropTile() {
+        if (state != PLACE_OR_DROP_TILE) {
+            throw new IllegalStateException("Is not PLACE_OR_DROP_TILE !"
+                    + getState());
+        }
+        state = TURN_END;
+        deck.putBack(pickedTile);
+    }
+
+    @Override
+    public int faceDownTileCount() {
+        if (state == NOT_STARTED) {
+            throw new IllegalStateException("Game : " + getState());
+        }
+        return deck.faceDownCount();
+    }
+
+    @Override
+    public int faceUpTileCount() {
+        if (state == NOT_STARTED) {
+            throw new IllegalStateException("Game : " + getState());
+        }
+        return deck.faceUpCount();
+    }
+
+    @Override
+    public List<Tile> getAllfaceUpTiles() {
+        if (state == NOT_STARTED) {
+            throw new IllegalStateException("Game : " + getState());
+        }
+        return Collections.unmodifiableList(deck.getAllFaceUp());
     }
 }
