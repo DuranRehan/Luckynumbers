@@ -26,5 +26,10 @@ public enum State {
     /**
      * End of the turn of a player
      */
-    TURN_END
+    TURN_END,
+    
+    /**
+     * State of the user must choose a face down or face up tile
+     */
+    PLACE_OR_DROP_TILE
 }
