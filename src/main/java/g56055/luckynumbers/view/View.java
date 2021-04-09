@@ -1,6 +1,7 @@
 package g56055.luckynumbers.view;
 
 import g56055.luckynumbers.model.Position;
+import g56055.luckynumbers.model.Tile;
 
 /**
  * Interface for the game view.
@@ -58,5 +59,15 @@ public interface View {
      * @return One row and one column as a position.
      */
     Position askPosition();
-
+    
+    /**
+     * Ask to user if he want pick a tile in face down deck or in the face up
+     */
+    void askDownOrUp();
+    
+    /**
+     * Ask user if he want drop the picked tile 
+     * @return true if user would drop the tile, false otherwise
+     */
+    boolean askDropOrNot();
 }

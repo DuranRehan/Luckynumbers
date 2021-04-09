@@ -4,6 +4,8 @@ import static g56055.luckynumbers.utils.JavaUtils.reading_int_Robust;
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
 import g56055.luckynumbers.model.State;
+import g56055.luckynumbers.model.Tile;
+
 /**
  * Gather the necessary elements for the game view and implement the console
  * view
@@ -36,7 +38,9 @@ public class MyView implements View {
     @Override
     public void displayGame() {
         int player = game.getCurrentPlayerNumber() + 1;
-        System.out.println("Board of player " + player);
+        System.out.println("    Board of player " + player);
+        System.out.println("");
+        displayTilesCounter();
         displayUpperFrame();
         displayBodyBoard();
         displayBottomFrame();
@@ -92,7 +96,8 @@ public class MyView implements View {
      */
     private void displayBottomFrame() {
         System.out.println("  #===========================#");
-        if (game.getState() == State.PLACE_TILE) {
+        if ((game.getState() == State.PLACE_TILE)
+                || (game.getState() == State.PLACE_OR_DROP_TILE)) {
             System.out.println("Picked tile : "
                     + game.getPickedTile().getValue());
         }
@@ -149,4 +154,73 @@ public class MyView implements View {
         return new Position(row, col);
     }
 
+    /**
+     * Display the tiles counter frame
+     */
+    private void displayTilesCounter() {
+        System.out.println("Tiles face Down : " + game.faceDownTileCount());
+        System.out.print("Tiles face Up : ");
+        displayTilesUp();
+        System.out.println("");
+    }
+
+    /**
+     * Display all values from face up deck
+     */
+    private void displayTilesUp() {
+        for (Tile tile : game.getAllfaceUpTiles()) {
+            System.out.print(tile.getValue() + ", ");
+        }
+    }
+
+    @Override
+    public void askDownOrUp() {
+
+        if (game.faceUpTileCount() == 0) {
+            game.pickFaceDownTile();
+        } else {
+            System.out.println("Enter 0 for Tile down or 1 for Tile Up : ");
+            int answer = reading_int_Robust();
+            while (answer != 0 && answer != 1) {
+                displayError("Enter 0 or 1 !");
+                answer = reading_int_Robust();
+            }
+            if (answer == 0) {
+                game.pickFaceDownTile();
+            } else if (answer == 1 && game.faceUpTileCount() != 0) {
+                Tile tile = askWhichTile();
+                game.pickFaceUpTile(tile);
+            } else {
+                System.out.println("No face up tiles available");
+                game.pickFaceDownTile();
+            }
+        }
+    }
+
+    /**
+     * Ask to user which tile he want chosen from face up deck
+     *
+     * @return the selected tile from face up deck
+     */
+    private Tile askWhichTile() {
+        System.out.print("Available Tiles up : ");
+        displayTilesUp();
+        System.out.println("");
+        System.out.println("Enter tile position in the Face Up list: ");
+        int pos = reading_int_Robust() - 1;
+        while (pos < 0 && pos < game.faceUpTileCount()) {
+            displayError("Enter number between 1 and " + game.faceUpTileCount()
+                    + " : ");
+            pos = reading_int_Robust();
+        }
+        return game.getAllfaceUpTiles().get(pos);
+    }
+
+    @Override
+    public boolean askDropOrNot() {
+        System.out.println("Enter 0 if you want to Drop the tile,"
+                + " a random number otherwise : ");
+        int answer = reading_int_Robust();
+        return answer == 0;
+    }
 }
