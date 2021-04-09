@@ -1,6 +1,5 @@
 package g56055.luckynumbers.model;
 
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -525,7 +524,7 @@ public class GameTest {
         addTilesInFaceUpList(40);
         assertEquals(40, game.faceUpTileCount());
     }
-    
+
     /*Add n values in the face up list*/
     private void addTilesInFaceUpList(int n) {
         for (int i = 0; i < n; i++) {
@@ -543,13 +542,13 @@ public class GameTest {
         assertThrows(IllegalStateException.class,
                 () -> game.getAllfaceUpTiles());
     }
-    
+
     @Test
     public void getAllfaceUpTiles_Empty_list() {
         game.start(2);
         assertEquals(0, game.getAllfaceUpTiles().size());
     }
-    
+
     @Test
     public void getAllfaceUpTiles_list_size_equals_count_Face_Up_tiles() {
         game.start(2);

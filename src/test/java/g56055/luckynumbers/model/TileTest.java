@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for Tile class
- * 
+ *
  * @author Duran Rehan g56055
  */
 public class TileTest {
@@ -13,7 +13,7 @@ public class TileTest {
     public TileTest() {
     }
 
-        /* =====================
+    /* =====================
          Tests for faceFaceUp()
         ======================= */
     @Test
