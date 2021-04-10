@@ -1,6 +1,5 @@
 package g56055.luckynumbers.model;
 
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -555,5 +554,41 @@ public class GameTest {
         addTilesInFaceUpList(25);
         int totalFaceUp = game.faceUpTileCount();
         assertEquals(totalFaceUp, game.getAllfaceUpTiles().size());
+    }
+
+    /* ====================
+         Tests for placeTileBeginning()
+       ======================*/
+    @Test
+    public void placeTileBeginning_state_not_ok() {
+        assertThrows(IllegalStateException.class,
+                () -> game.placeTileBeginning());
+    }
+
+    @Test
+    public void placeTileBeginning_tiles_are_placed_on_diagonale() {
+        game.start(2);
+        game.placeTileBeginning();
+        assertTrue(
+                (game.getTile(0, new Position(0, 0)) != null)
+                && (game.getTile(0, new Position(1, 1)) != null)
+                && (game.getTile(0, new Position(2, 2)) != null)
+                && (game.getTile(0, new Position(3, 3)) != null)
+        );
+    }
+
+    @Test
+    public void placeTileBeginning_tiles_are_in_ascending_order() {
+        game.start(2);
+        game.placeTileBeginning();
+        int valPos1 = game.getTile(0, new Position(0, 0)).getValue();
+        int valPos2 = game.getTile(0, new Position(1, 1)).getValue();
+        int valPos3 = game.getTile(0, new Position(2, 2)).getValue();
+        int valPos4 = game.getTile(0, new Position(3, 3)).getValue();
+        assertTrue(
+                valPos1 <valPos2 
+                && valPos2 < valPos3
+                && valPos3 < valPos4
+        );
     }
 }

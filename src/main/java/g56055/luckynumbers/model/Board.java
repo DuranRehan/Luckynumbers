@@ -197,6 +197,7 @@ public class Board {
     }
     /**
      * Count the number of cases currently empty on the board
+     * 
      * @return the count of empty cases of the board
      */
     public int countEmptyCases() {

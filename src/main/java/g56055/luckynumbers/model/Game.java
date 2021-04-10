@@ -270,4 +270,19 @@ public class Game implements Model {
         }
         return Collections.unmodifiableList(deck.getAllFaceUp());
     }
+
+    @Override
+    public void placeTileBeginning() {
+        if(state != PICK_TILE){
+            throw new IllegalStateException("The Board are not Inizialited !");
+        }
+        for (Board board : boards) {
+            List<Tile> tiles = deck.pick4RandomDownTile();
+            int posCounter = 0;
+            for (Tile tile : tiles) {
+                board.put(tile, new Position(posCounter, posCounter));
+                posCounter++;
+            }
+        }
+    }
 }

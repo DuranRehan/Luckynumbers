@@ -201,5 +201,11 @@ public interface Model {
      * @throws IllegalStateException if game state is not GAME_OVER
      */
     List<Integer> getWinners();
-
+    
+    /**
+     * Place 4 random tiles in ascending order on each player's board
+     * 
+     * @throws IllegalStateException if the state is not PICK_TILE
+     */
+    void placeTileBeginning();
 }

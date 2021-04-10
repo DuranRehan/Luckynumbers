@@ -37,6 +37,7 @@ public class Controller {
                 case NOT_STARTED:
                     int playerCount = view.askPlayerCount();
                     game.start(playerCount);
+                    game.placeTileBeginning();
                     break;
 
                 case PICK_TILE:

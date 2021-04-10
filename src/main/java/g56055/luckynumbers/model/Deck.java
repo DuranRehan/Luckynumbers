@@ -3,6 +3,7 @@ package g56055.luckynumbers.model;
 import java.util.ArrayList;
 import java.util.List;
 import g56055.luckynumbers.utils.JavaUtils;
+import java.util.Collections;
 
 /**
  * This class contains all the tiles available in the center of the "table"
@@ -106,5 +107,27 @@ public class Deck {
      */
     List<Tile> getFaceDownTiles() {
         return faceDownTiles;
+    }
+
+    /**
+     * Pick 4 random tiles 
+     *
+     * @return a list with 4 tiles
+     */
+    public List<Tile> pick4RandomDownTile() {
+        List<Tile> tiles = new ArrayList<>();
+        while (tiles.size() < 4) {
+            Tile tile = new Tile(JavaUtils.rdmNumber(1, 20));
+            if (!tiles.contains(tile)) {
+                tiles.add(tile);
+            }
+        }
+        for (Tile tile : tiles) {
+            faceDownTiles.remove(tile);
+        }
+        Collections.sort(tiles, (o1, o2)
+                -> Integer.compare(o1.getValue(), o2.getValue())
+        );
+        return tiles;
     }
 }

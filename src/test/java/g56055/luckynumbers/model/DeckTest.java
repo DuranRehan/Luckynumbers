@@ -1,12 +1,13 @@
 package g56055.luckynumbers.model;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Test class for Deck class
- * 
+ *
  * @author Duran Rehan g56055
  */
 public class DeckTest {
@@ -55,7 +56,7 @@ public class DeckTest {
        ========================= */
     @Test
     public void faceUpCount_all_tiles_visible() {
-        for(int i = 0 ; i < 40; i++) {
+        for (int i = 0; i < 40; i++) {
             Tile tile = new Tile(5);
             deck.putBack(tile);
         }
@@ -95,7 +96,7 @@ public class DeckTest {
         deck.putBack(tile_candidate);
         assertTrue(deck.hasFaceUp(tile_candidate));
     }
-    
+
     /* =====================
          Tests for pickFaceUp()
        ========================= */
@@ -106,7 +107,7 @@ public class DeckTest {
         deck.pickFaceUp(tile_candidate);
         assertFalse(deck.getAllFaceUp().contains(tile_candidate));
     }
-    
+
     /* =====================
          Tests for putBack ()
        ========================= */
@@ -114,13 +115,45 @@ public class DeckTest {
     public void putBack_check_if_visible_ok() {
         Tile tile_candidate = new Tile(2);
         deck.putBack(tile_candidate);
-        assertTrue( deck.getAllFaceUp().get(0).isFaceUp());
+        assertTrue(deck.getAllFaceUp().get(0).isFaceUp());
     }
-    
-    @Test 
+
+    @Test
     public void putBack_is_in_face_up_list() {
         Tile tile_candidate = new Tile(2);
         deck.putBack(tile_candidate);
         assertEquals(tile_candidate, deck.getAllFaceUp().get(0));
+    }
+
+    /* =====================
+         Tests for pickRandomDownTile ()
+       ========================= */
+    @Test
+    public void pickRandomDownTile_list_are_ascending() {
+        List<Tile> list = deck.pick4RandomDownTile();
+        int valPos1 = list.get(0).getValue();
+        int valPos2 = list.get(1).getValue();
+        int valPos3 = list.get(2).getValue();
+        int valPos4 = list.get(3).getValue();
+        assertTrue(
+                valPos1 < valPos2
+                && valPos2 < valPos3
+                && valPos3 < valPos4
+        );
+    }
+
+    @Test
+    public void pickRandomDownTile_value_in_list_not_equals() {
+        List<Tile> list = deck.pick4RandomDownTile();
+        boolean isEquals = false;
+        for (Tile tile : list) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) != tile 
+                        && tile.getValue() == list.get(i).getValue()) {
+                    isEquals = true;
+                }
+            }
+        }
+        assertFalse(isEquals);
     }
 }
