@@ -2,8 +2,6 @@ package g56055.luckynumbers.controller;
 
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
-import g56055.luckynumbers.model.Tile;
-import g56055.luckynumbers.utils.JavaUtils;
 import g56055.luckynumbers.view.View;
 
 /**
