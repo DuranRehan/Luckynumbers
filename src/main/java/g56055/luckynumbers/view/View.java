@@ -1,7 +1,6 @@
 package g56055.luckynumbers.view;
 
 import g56055.luckynumbers.model.Position;
-import g56055.luckynumbers.model.Tile;
 
 /**
  * Interface for the game view.

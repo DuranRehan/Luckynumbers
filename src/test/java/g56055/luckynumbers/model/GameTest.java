@@ -1,5 +1,6 @@
 package g56055.luckynumbers.model;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +38,7 @@ public class GameTest {
     }
 
     /* Play a game till the end */
-    private int fullPlay() {
+    private void fullPlay() {
         game.start(2);
         int value = 1;
         int line = 0;
@@ -56,9 +57,7 @@ public class GameTest {
             }
         }
         game.pickTile(20);
-        int currentPlayer = game.getCurrentPlayerNumber();
         game.putTile(new Position(line, col));
-        return currentPlayer;
     }
 
     @Test
@@ -416,7 +415,7 @@ public class GameTest {
     public void getWinner_when_state_is_not_ok() {
         game.start(2);
         assertThrows(IllegalStateException.class,
-                () -> game.getWinner());
+                () -> game.getWinners());
     }
 
     @Test
@@ -427,8 +426,9 @@ public class GameTest {
 
     @Test
     public void getWinner_winner_is_the_right_player() {
-        int winner = fullPlay();
-        assertTrue(winner == game.getWinner());
+        fullPlay();
+        int winner = 1;
+        assertTrue(winner == game.getWinners().get(0));
     }
 
     /* ====================

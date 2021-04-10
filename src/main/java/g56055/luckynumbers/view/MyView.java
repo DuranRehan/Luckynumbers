@@ -107,13 +107,22 @@ public class MyView implements View {
     public void displayWinner() {
         System.out.println("#========================#");
         System.out.println("#                        #");
-        System.out.println("#  And the winner is ?!  #");
+        System.out.println("#  And the winners are ?!#");
         System.out.println("#                        #");
-        System.out.println("#        Player :  " + (game.getWinner() + 1)
-                + "     #");
+        displayAllsWinners();
         System.out.println("#                        #");
         System.out.println("#        Well Play !     #");
         System.out.println("#========================#");
+    }
+
+    /**
+     * Display all winners of the games
+     */
+    private void displayAllsWinners() {
+        for (Integer winner : game.getWinners()) {
+            System.out.println("#         Player " + (winner + 1)
+                    + "       #");
+        }
     }
 
     @Override
@@ -175,7 +184,6 @@ public class MyView implements View {
 
     @Override
     public void askDownOrUp() {
-
         if (game.faceUpTileCount() == 0) {
             game.pickFaceDownTile();
         } else {

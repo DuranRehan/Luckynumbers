@@ -1,6 +1,7 @@
 package g56055.luckynumbers.model;
 
 import static g56055.luckynumbers.model.State.*;
+import java.util.ArrayList;
 import java.util.Collections;
 //import g56055.luckynumbers.utils.JavaUtils;
 import java.util.List;
@@ -85,8 +86,11 @@ public class Game implements Model {
             if (!canTileBePut(pos)) {
                 throw new IllegalArgumentException("Tile cannot be place !");
             }
+
             boards[currentPlayerNumber].put(pickedTile, pos);
-            if (boards[currentPlayerNumber].isFull()) {
+            if (deck.faceDownCount() == 0) {
+                this.state = GAME_OVER;
+            } else if (boards[currentPlayerNumber].isFull()) {
                 this.state = GAME_OVER;
             } else {
                 this.state = TURN_END;
@@ -174,18 +178,48 @@ public class Game implements Model {
     }
 
     @Override
-    public int getWinner() {
+    public List<Integer> getWinners() {
         if (state != GAME_OVER) {
             throw new IllegalStateException("GAME IS NOT OVER");
         }
 
-        return currentPlayerNumber;
+        return getListOfAllWinners();
+    }
+
+    /**
+     * find all the winners of the game by counting the number of empty cases in
+     * their boards
+     *
+     * @return list with all winners
+     * @throws IllegalStateException if state is not GAME_OVER
+     */
+    private List<Integer> getListOfAllWinners() {
+        if (state != GAME_OVER) {
+            throw new IllegalStateException("GAME IS NOT OVER");
+        }
+        List<Integer> listMostEmptyPlayerNumber = new ArrayList();
+        int saveLastEmpty = -1;
+        int playerNumber = 0;
+        for (Board board : boards) {
+            if (board.countEmptyCases() == saveLastEmpty) {
+                listMostEmptyPlayerNumber.add(playerNumber);
+            } else if (board.countEmptyCases() > saveLastEmpty) {
+                saveLastEmpty = board.countEmptyCases();
+                listMostEmptyPlayerNumber.clear();
+                listMostEmptyPlayerNumber.add(playerNumber);
+            }
+            playerNumber++;
+        }
+        return listMostEmptyPlayerNumber;
     }
 
     @Override
     public Tile pickFaceDownTile() {
         if (state != PICK_TILE) {
             throw new IllegalStateException("Is not PICK_TILE !" + getState());
+        }
+        if (deck.faceDownCount() < 0) {
+            throw new IllegalArgumentException("FaceDown Count < 0 ! ");
         }
         state = PLACE_OR_DROP_TILE;
         pickedTile = deck.pickFaceDown();

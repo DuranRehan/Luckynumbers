@@ -60,16 +60,22 @@ public class Controller {
             }
         }
     }
+
     /**
      * Controls state actions of PLACE_OR_DROP_TILE
      */
     private void Place_Or_Drop_tile_control() {
         view.displayGame();
-        if (view.askDropOrNot()) {
-            game.dropTile();
-        } else {
+        if (game.faceDownTileCount() == 0) {
             Position pos = view.askPosition();
             game.putTile(pos);
+        } else {
+            if (view.askDropOrNot()) {
+                game.dropTile();
+            } else {
+                Position pos = view.askPosition();
+                game.putTile(pos);
+            }
         }
     }
 }

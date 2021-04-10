@@ -15,9 +15,9 @@ public class Deck {
     private List<Tile> faceDownTiles = new ArrayList<>();
 
     /**
-     * Create a random deck of 20 tiles numbered from 1 to 20, 
-     * as many times as there are players
-     * 
+     * Create a random deck of 20 tiles numbered from 1 to 20, as many times as
+     * there are players
+     *
      * @param playerCount number of players for whom a deck is needed
      */
     public Deck(int playerCount) {
@@ -33,7 +33,7 @@ public class Deck {
 
     /**
      * get the count of hidden tiles in the deck
-     * 
+     *
      * @return count of hidden tiles
      */
     public int faceDownCount() {
@@ -42,7 +42,7 @@ public class Deck {
 
     /**
      * remove a face down tile in the deck
-     * 
+     *
      * @return the removed tile
      */
     public Tile pickFaceDown() {
@@ -53,16 +53,16 @@ public class Deck {
 
     /**
      * get the count of visible tiles in the deck
-     * 
+     *
      * @return the count of visible tiles
      */
     public int faceUpCount() {
         return faceUpTiles.size();
     }
-    
+
     /**
      * Get all visible tiles in the deck
-     * 
+     *
      * @return the entire list of visibles tiles
      */
     public List<Tile> getAllFaceUp() {
@@ -71,7 +71,7 @@ public class Deck {
 
     /**
      * checks if the tile exists and is visible in the deck
-     * 
+     *
      * @param tile the tile to check
      * @return true if the tile is visible and exists, false otherwise
      */
@@ -81,7 +81,7 @@ public class Deck {
 
     /**
      * Removes a certain tile from the visible deck
-     * 
+     *
      * @param tile the tile to remove in the deck
      */
     public void pickFaceUp(Tile tile) {
@@ -97,11 +97,11 @@ public class Deck {
         tile.flipFaceUp();
         faceUpTiles.add(tile);
     }
-    
+
     /**
-     * This method aim to test the implemented method,
-     * Should be used only for the JUnit tests.
-     * 
+     * This method aim to test the implemented method, Should be used only for
+     * the JUnit tests.
+     *
      * @return the list of hidden tiles
      */
     List<Tile> getFaceDownTiles() {

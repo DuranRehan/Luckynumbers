@@ -116,8 +116,8 @@ public interface Model {
      * @throws IllegalArgumentException if the tile can't be put on that
      * position (position outside of the board or position not allowed by the
      * rules)
-     * @throws IllegalStateException 
-     * if called when state is not PLACE_TILE or PLACE_OR_DROP_TILE
+     * @throws IllegalStateException if called when state is not PLACE_TILE or
+     * PLACE_OR_DROP_TILE
      */
     void putTile(Position pos);
 
@@ -195,11 +195,11 @@ public interface Model {
     Tile getTile(int playerNumber, Position pos);
 
     /**
-     * Give the winner.
+     * Give the list of winners.
      *
-     * @return the number of the winner.
+     * @return the list of winners.
      * @throws IllegalStateException if game state is not GAME_OVER
      */
-    int getWinner();
+    List<Integer> getWinners();
 
 }

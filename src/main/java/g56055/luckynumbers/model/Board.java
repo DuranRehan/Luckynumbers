@@ -195,4 +195,19 @@ public class Board {
         }
         return true;
     }
+    /**
+     * Count the number of cases currently empty on the board
+     * @return the count of empty cases of the board
+     */
+    public int countEmptyCases() {
+        int countEmpty = 0;
+        for (Tile[] lg : tiles) {
+            for (Tile col : lg) {
+                if (col == null) {
+                    countEmpty++;
+                }
+            }
+        }
+        return countEmpty;
+    }
 }
