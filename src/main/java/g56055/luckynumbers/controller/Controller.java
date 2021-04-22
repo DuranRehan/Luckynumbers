@@ -55,6 +55,7 @@ public class Controller {
                 case GAME_OVER:
                     view.displayWinner();
                     game.start(view.askPlayerCount());
+                    game.placeTileBeginning();
                     break;
             }
         }

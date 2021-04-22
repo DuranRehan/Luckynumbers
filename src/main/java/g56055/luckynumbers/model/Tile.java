@@ -71,5 +71,5 @@ public class Tile {
         }
         final Tile other = (Tile) obj;
         return Objects.equals(this.value, other.value);
-    }   
+    }  
 }

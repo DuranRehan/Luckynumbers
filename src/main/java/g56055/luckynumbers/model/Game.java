@@ -181,28 +181,24 @@ public class Game implements Model {
         if (state != GAME_OVER) {
             throw new IllegalStateException("GAME IS NOT OVER");
         }
-
-        return getListOfAllWinners();
+        return getListOfWinners();
     }
 
     /**
-     * find all the winners of the game by counting the number of empty cases in
+     * Find all the winners of the game by counting the number of empty cases in
      * their boards
      *
      * @return list with all winners
      * @throws IllegalStateException if state is not GAME_OVER
      */
-    private List<Integer> getListOfAllWinners() {
-        if (state != GAME_OVER) {
-            throw new IllegalStateException("GAME IS NOT OVER");
-        }
+    private List<Integer> getListOfWinners() {
         List<Integer> listMostEmptyPlayerNumber = new ArrayList();
-        int saveLastEmpty = -1;
         int playerNumber = 0;
+        int saveLastEmpty = boards[playerNumber].countEmptyCases();
         for (Board board : boards) {
             if (board.countEmptyCases() == saveLastEmpty) {
                 listMostEmptyPlayerNumber.add(playerNumber);
-            } else if (board.countEmptyCases() > saveLastEmpty) {
+            } else if (board.countEmptyCases() < saveLastEmpty) {
                 saveLastEmpty = board.countEmptyCases();
                 listMostEmptyPlayerNumber.clear();
                 listMostEmptyPlayerNumber.add(playerNumber);
@@ -272,7 +268,7 @@ public class Game implements Model {
 
     @Override
     public void placeTileBeginning() {
-        if(state != PICK_TILE){
+        if (state != PICK_TILE) {
             throw new IllegalStateException("The Board are not Inizialited !");
         }
         for (Board board : boards) {
