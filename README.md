@@ -16,4 +16,4 @@
     2. In the Game Model, I added a public method (void) which allowed me to add to the board of each player 4 tiles chosen by harsard 
         thanks to the method previously described
 
-    3. the method created in the Game class has therefore found its use in the controller at the time of game.start ()
+    3. the method created in the Game class has therefore found its use in the start method of the Game class
