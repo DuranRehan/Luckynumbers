@@ -44,34 +44,35 @@ public class Game implements Model {
         for (int i = 0; i <= playerCount - 1; i++) {
             boards[i] = new Board();
         }
+        placeTileBeginning();
     }
 
-//    @Override
-//    public Tile pickTile() {
-//        if (state != PICK_TILE) {
-//            throw new IllegalStateException("Not PICK_TILE");
-//        }
-//        this.state = PLACE_TILE;
-//        int rdm = JavaUtils.rdmNumber(1, 20);
-//        this.pickedTile = new Tile(rdm);
-//        return this.pickedTile;
-//    }
-    /**
-     * Pick a tile with the given value. Should be used only for the JUnit
-     * tests.
-     *
-     * @param value The value we want to place
-     * @return The tile with the chosen value
-     */
-    Tile pickTile(int value) {
+    /*    @Override
+    public Tile pickTile() {
         if (state != PICK_TILE) {
             throw new IllegalStateException("Not PICK_TILE");
         }
         this.state = PLACE_TILE;
-        this.pickedTile = new Tile(value);
+        int rdm = JavaUtils.rdmNumber(1, 20);
+        this.pickedTile = new Tile(rdm);
         return this.pickedTile;
     }
-
+     */
+//    /**
+//     * Pick a tile with the given value. Should be used only for the JUnit
+//     * tests.
+//     *
+//     * @param value The value we want to place
+//     * @return The tile with the chosen value
+//     */
+//    Tile pickTile(int value) {
+//        if (state != PICK_TILE) {
+//            throw new IllegalStateException("Not PICK_TILE");
+//        }
+//        this.state = PLACE_TILE;
+//        this.pickedTile = new Tile(value);
+//        return this.pickedTile;
+//    }
     @Override
     public int getBoardSize() {
 
@@ -219,6 +220,17 @@ public class Game implements Model {
         state = PLACE_OR_DROP_TILE;
         pickedTile = deck.pickFaceDown();
         return pickedTile;
+    }
+
+    void pickChosenFaceDownTile(int value) {
+        if (state != PICK_TILE) {
+            throw new IllegalStateException("Is not PICK_TILE !" + getState());
+        }
+        if (deck.faceDownCount() < 0) {
+            throw new IllegalArgumentException("FaceDown Count < 0 ! ");
+        }
+        state = PLACE_OR_DROP_TILE;
+        pickedTile = new Tile(value);
     }
 
     @Override

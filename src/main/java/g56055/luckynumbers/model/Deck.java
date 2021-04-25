@@ -123,6 +123,7 @@ public class Deck {
             }
         }
         for (Tile tile : tiles) {
+            faceUpTiles.add(tile);
             faceDownTiles.remove(tile);
         }
         Collections.sort(tiles, (o1, o2)
