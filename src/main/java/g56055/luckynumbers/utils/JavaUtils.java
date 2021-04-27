@@ -38,7 +38,8 @@ public class JavaUtils {
     }
 
     /**
-     * Shuffle a list 
+     * Shuffle a list
+     *
      * @param list list to be shuffled
      */
     public static void shuffle(List list) {
@@ -52,6 +53,7 @@ public class JavaUtils {
 
     /**
      * Swap two elements of a list
+     *
      * @param list list on which to shuffle
      * @param pos1 the position of the first to swap
      * @param pos2 the position of the second to swap
@@ -62,9 +64,9 @@ public class JavaUtils {
                     + pos1 + " " + pos2);
         }
         var savedValue = list.get(pos1);
-        list.add(pos1,list.get(pos2));
-        list.remove(pos1+1);
+        list.add(pos1, list.get(pos2));
+        list.remove(pos1 + 1);
         list.add(pos2, savedValue);
-        list.remove(pos2+1);
+        list.remove(pos2 + 1);
     }
 }

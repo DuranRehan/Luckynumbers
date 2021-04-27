@@ -47,17 +47,17 @@ public class Game implements Model {
         placeTileBeginning();
     }
 
-    /*    @Override
-    public Tile pickTile() {
-        if (state != PICK_TILE) {
-            throw new IllegalStateException("Not PICK_TILE");
-        }
-        this.state = PLACE_TILE;
-        int rdm = JavaUtils.rdmNumber(1, 20);
-        this.pickedTile = new Tile(rdm);
-        return this.pickedTile;
-    }
-     */
+//    @Override
+//    public Tile pickTile() {
+//        if (state != PICK_TILE) {
+//            throw new IllegalStateException("Not PICK_TILE");
+//        }
+//        this.state = PLACE_TILE;
+//        int rdm = JavaUtils.rdmNumber(1, 20);
+//        this.pickedTile = new Tile(rdm);
+//        return this.pickedTile;
+//    }
+//     
 //    /**
 //     * Pick a tile with the given value. Should be used only for the JUnit
 //     * tests.
@@ -75,7 +75,6 @@ public class Game implements Model {
 //    }
     @Override
     public int getBoardSize() {
-
         return boards[currentPlayerNumber].getSize();
     }
 
@@ -86,7 +85,6 @@ public class Game implements Model {
             if (!canTileBePut(pos)) {
                 throw new IllegalArgumentException("Tile cannot be place !");
             }
-
             boards[currentPlayerNumber].put(pickedTile, pos);
             if (deck.faceDownCount() == 0) {
                 this.state = GAME_OVER;
@@ -96,7 +94,7 @@ public class Game implements Model {
                 this.state = TURN_END;
             }
         } else {
-            throw new IllegalStateException("Is not the right State"
+            throw new IllegalStateException("Is not the right State : "
                     + getState());
         }
     }
@@ -104,7 +102,7 @@ public class Game implements Model {
     @Override
     public void nextPlayer() {
         if (state != TURN_END) {
-            throw new IllegalStateException(" TURN is not END");
+            throw new IllegalStateException("TURN is not END");
         }
         state = PICK_TILE;
         if (currentPlayerNumber == playerCount - 1) {
@@ -119,13 +117,11 @@ public class Game implements Model {
         if (state == NOT_STARTED) {
             throw new IllegalStateException("GAME NOT STARTED");
         }
-
         return this.playerCount;
     }
 
     @Override
     public State getState() {
-
         return this.state;
     }
 
@@ -143,7 +139,8 @@ public class Game implements Model {
                 || this.state == State.PLACE_OR_DROP_TILE) {
             return pickedTile;
         } else {
-            throw new IllegalStateException("NOT PLACE_TILE");
+            throw new IllegalStateException("is not PLACE TILE OR "
+                    + "PLACE_OR_DROP_TILE");
         }
     }
 
@@ -161,7 +158,8 @@ public class Game implements Model {
             }
             return boards[currentPlayerNumber].canBePut(pickedTile, pos);
         } else {
-            throw new IllegalStateException("IS NOT PLACE TILE OR PLACE_DROP");
+            throw new IllegalStateException("is not PLACE TILE OR "
+                    + "PLACE_OR_DROP_TILE");
         }
     }
 
@@ -171,9 +169,9 @@ public class Game implements Model {
             throw new IllegalStateException("GAME IS NOT STARTED");
         }
         if (!isInside(pos) || playerNumber > playerCount || playerNumber < 0) {
-            throw new IllegalArgumentException("Tile is not valide");
+            throw new IllegalArgumentException("the described tile "
+                    + "is not valid");
         }
-
         return boards[currentPlayerNumber].getTile(pos);
     }
 
@@ -193,20 +191,20 @@ public class Game implements Model {
      * @throws IllegalStateException if state is not GAME_OVER
      */
     private List<Integer> getListOfWinners() {
-        List<Integer> listMostEmptyPlayerNumber = new ArrayList();
+        List<Integer> winnersList = new ArrayList();
         int playerNumber = 0;
-        int saveLastEmpty = boards[playerNumber].countEmptyCases();
+        int saveLastCount = boards[playerNumber].countEmptyCases();
         for (Board board : boards) {
-            if (board.countEmptyCases() == saveLastEmpty) {
-                listMostEmptyPlayerNumber.add(playerNumber);
-            } else if (board.countEmptyCases() < saveLastEmpty) {
-                saveLastEmpty = board.countEmptyCases();
-                listMostEmptyPlayerNumber.clear();
-                listMostEmptyPlayerNumber.add(playerNumber);
+            if (board.countEmptyCases() == saveLastCount) {
+                winnersList.add(playerNumber);
+            } else if (board.countEmptyCases() < saveLastCount) {
+                saveLastCount = board.countEmptyCases();
+                winnersList.clear();
+                winnersList.add(playerNumber);
             }
             playerNumber++;
         }
-        return listMostEmptyPlayerNumber;
+        return winnersList;
     }
 
     @Override
@@ -281,7 +279,8 @@ public class Game implements Model {
     @Override
     public void placeTileBeginning() {
         if (state != PICK_TILE) {
-            throw new IllegalStateException("The Board are not Inizialited !");
+            throw new IllegalStateException("State is not PICK_TILE : "
+                    + getState());
         }
         for (Board board : boards) {
             List<Tile> tiles = deck.pick4RandomDownTile();

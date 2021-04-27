@@ -33,7 +33,7 @@ public class BoardTest {
 
     @Test
     public void isInside_true_when_last_row() {
-        Position pos = new Position(1, board.getSize()-1);
+        Position pos = new Position(1, board.getSize() - 1);
         assertTrue(board.isInside(pos));
     }
 
@@ -57,7 +57,7 @@ public class BoardTest {
 
     @Test
     public void isInside_true_when_last_col() {
-        Position pos = new Position(board.getSize()-1, 1);
+        Position pos = new Position(board.getSize() - 1, 1);
         assertTrue(board.isInside(pos));
     }
 

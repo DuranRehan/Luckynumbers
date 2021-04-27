@@ -110,7 +110,7 @@ public class Deck {
     }
 
     /**
-     * Pick 4 random tiles 
+     * Pick 4 random tiles
      *
      * @return a list with 4 tiles
      */
@@ -123,7 +123,6 @@ public class Deck {
             }
         }
         for (Tile tile : tiles) {
-            faceUpTiles.add(tile);
             faceDownTiles.remove(tile);
         }
         Collections.sort(tiles, (o1, o2)

@@ -178,7 +178,7 @@ public class MyView implements View {
      */
     private void displayTilesUp() {
         for (Tile tile : game.getAllfaceUpTiles()) {
-            System.out.print(tile.getValue() + ", ");
+            System.out.print(tile.getValue() + " | ");
         }
     }
 

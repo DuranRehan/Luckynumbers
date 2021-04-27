@@ -2,7 +2,7 @@ package g56055.luckynumbers.model;
 
 /**
  * Different possible states of the game
- * 
+ *
  * @author Duran Rehan g56055
  */
 public enum State {
@@ -27,7 +27,6 @@ public enum State {
      * End of the turn of a player
      */
     TURN_END,
-    
     /**
      * State of the user must choose a face down or face up tile
      */

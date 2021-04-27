@@ -22,26 +22,26 @@ public class Tile {
     }
 
     /**
-     * Get the value of a tile
+     * Gets the value of a tile
      *
      * @return the value of tile
      */
     public int getValue() {
         return this.value;
     }
-    
+
     /**
      * Check if the tile is returned or not
-     * 
+     *
      * @return true if the tile is returned, false otherwise
      */
     public boolean isFaceUp() {
         return faceUp;
     }
-    
+
     /**
      * Make the tile visible
-     * 
+     *
      */
     void flipFaceUp() {
         this.faceUp = true;
@@ -71,5 +71,5 @@ public class Tile {
         }
         final Tile other = (Tile) obj;
         return Objects.equals(this.value, other.value);
-    }  
+    }
 }

@@ -148,7 +148,7 @@ public class DeckTest {
         boolean isEquals = false;
         for (Tile tile : list) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) != tile 
+                if (list.get(i) != tile
                         && tile.getValue() == list.get(i).getValue()) {
                     isEquals = true;
                 }
