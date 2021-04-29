@@ -2,6 +2,7 @@ package g56055.luckynumbers.controller;
 
 import g56055.luckynumbers.model.Model;
 import g56055.luckynumbers.model.Position;
+import g56055.luckynumbers.model.Tile;
 import g56055.luckynumbers.view.View;
 
 /**
@@ -38,10 +39,10 @@ public class Controller {
                     break;
 
                 case PICK_TILE:
-                    view.askDownOrUp();
+                    pickTile_Control();
                     break;
                 case PLACE_OR_DROP_TILE:
-                    Place_Or_Drop_tile_control();
+                    place_Or_Drop_tile_control();
                     break;
                 case PLACE_TILE:
                     view.displayGame();
@@ -62,7 +63,7 @@ public class Controller {
     /**
      * Controls state actions of PLACE_OR_DROP_TILE
      */
-    private void Place_Or_Drop_tile_control() {
+    private void place_Or_Drop_tile_control() {
         view.displayGame();
         if (game.faceDownTileCount() == 0) {
             Position pos = view.askPosition();
@@ -73,6 +74,23 @@ public class Controller {
             } else {
                 Position pos = view.askPosition();
                 game.putTile(pos);
+            }
+        }
+    }
+
+    /**
+     * Controls state actions of PICK_TILE
+     */
+    private void pickTile_Control() {
+        if (game.faceUpTileCount() == 0) {
+            game.pickFaceDownTile();
+        } else {
+            int answer = view.askDownOrUp();
+            if (answer == 0) {
+                game.pickFaceDownTile();
+            } else if (answer == 1 && game.faceUpTileCount() != 0) {
+                Tile tile = view.askWhichTile();
+                game.pickFaceUpTile(tile);
             }
         }
     }

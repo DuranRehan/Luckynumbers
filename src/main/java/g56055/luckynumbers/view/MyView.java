@@ -105,14 +105,14 @@ public class MyView implements View {
 
     @Override
     public void displayWinner() {
-        System.out.println("#========================#");
-        System.out.println("#                        #");
-        System.out.println("#  And the winners are ?!#");
-        System.out.println("#                        #");
+        System.out.println("#=========================#");
+        System.out.println("#                         #");
+        System.out.println("#  And the winners are ?! #");
+        System.out.println("#                         #");
         displayAllsWinners();
-        System.out.println("#                        #");
-        System.out.println("#        Well Play !     #");
-        System.out.println("#========================#");
+        System.out.println("#                         #");
+        System.out.println("#        Well Play !      #");
+        System.out.println("#=========================#");
     }
 
     /**
@@ -121,7 +121,7 @@ public class MyView implements View {
     private void displayAllsWinners() {
         for (Integer winner : game.getWinners()) {
             System.out.println("#         Player " + (winner + 1)
-                    + "       #");
+                    + "        #");
         }
     }
 
@@ -183,34 +183,18 @@ public class MyView implements View {
     }
 
     @Override
-    public void askDownOrUp() {
-        if (game.faceUpTileCount() == 0) {
-            game.pickFaceDownTile();
-        } else {
-            System.out.println("Enter 0 for Tile down or 1 for Tile Up : ");
-            int answer = reading_int_Robust();
-            while (answer != 0 && answer != 1) {
-                displayError("Enter 0 or 1 !");
-                answer = reading_int_Robust();
-            }
-            if (answer == 0) {
-                game.pickFaceDownTile();
-            } else if (answer == 1 && game.faceUpTileCount() != 0) {
-                Tile tile = askWhichTile();
-                game.pickFaceUpTile(tile);
-            } else {
-                System.out.println("No face up tiles available");
-                game.pickFaceDownTile();
-            }
+    public int askDownOrUp() {
+        System.out.println("Enter 0 for Tile down or 1 for Tile Up : ");
+        int answer = reading_int_Robust();
+        while (answer != 0 && answer != 1) {
+            displayError("Enter 0 or 1 !");
+            answer = reading_int_Robust();
         }
+        return answer;
     }
 
-    /**
-     * Ask to user which tile he want chosen from face up deck
-     *
-     * @return the selected tile from face up deck
-     */
-    private Tile askWhichTile() {
+    @Override
+    public Tile askWhichTile() {
         System.out.print("Available Tiles up : ");
         displayTilesUp();
         System.out.println("");
