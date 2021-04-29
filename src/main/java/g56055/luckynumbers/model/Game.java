@@ -283,7 +283,7 @@ public class Game implements Model {
                     + getState());
         }
         for (Board board : boards) {
-            List<Tile> tiles = deck.pick4RandomDownTile();
+            List<Tile> tiles = deck.pickRandomDownTile(getBoardSize());
             int posCounter = 0;
             for (Tile tile : tiles) {
                 board.put(tile, new Position(posCounter, posCounter));

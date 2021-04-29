@@ -130,7 +130,7 @@ public class DeckTest {
        ========================= */
     @Test
     public void pickRandomDownTile_list_are_ascending() {
-        List<Tile> list = deck.pick4RandomDownTile();
+        List<Tile> list = deck.pickRandomDownTile(4);
         int valPos1 = list.get(0).getValue();
         int valPos2 = list.get(1).getValue();
         int valPos3 = list.get(2).getValue();
@@ -144,7 +144,7 @@ public class DeckTest {
 
     @Test
     public void pickRandomDownTile_value_in_list_not_equals() {
-        List<Tile> list = deck.pick4RandomDownTile();
+        List<Tile> list = deck.pickRandomDownTile(4);
         boolean isEquals = false;
         for (Tile tile : list) {
             for (int i = 0; i < list.size(); i++) {

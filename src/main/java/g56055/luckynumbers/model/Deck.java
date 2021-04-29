@@ -110,13 +110,14 @@ public class Deck {
     }
 
     /**
-     * Pick 4 random tiles
+     * Pick n random tiles
      *
+     * @param n the number of random tiles
      * @return a list with 4 tiles
      */
-    public List<Tile> pick4RandomDownTile() {
+    public List<Tile> pickRandomDownTile(int n) {
         List<Tile> tiles = new ArrayList<>();
-        while (tiles.size() < 4) {
+        while (tiles.size() < n) {
             Tile tile = new Tile(JavaUtils.rdmNumber(1, 20));
             if (!tiles.contains(tile)) {
                 tiles.add(tile);
