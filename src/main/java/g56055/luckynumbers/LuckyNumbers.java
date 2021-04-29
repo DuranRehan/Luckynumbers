@@ -20,7 +20,7 @@ public class LuckyNumbers {
         controller.play();
 
         /*
-        Fin Iteration 1.
+        Fin Iteration 2.
          */
     }
 }
