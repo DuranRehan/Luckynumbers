@@ -40,12 +40,12 @@ public class Controller {
 
                 case PICK_TILE:
                     pickTile_Control();
+                    view.displayGame();
                     break;
                 case PLACE_OR_DROP_TILE:
                     place_Or_Drop_tile_control();
                     break;
                 case PLACE_TILE:
-                    view.displayGame();
                     Position pos = view.askPosition();
                     game.putTile(pos);
                     break;
@@ -64,7 +64,7 @@ public class Controller {
      * Controls state actions of PLACE_OR_DROP_TILE
      */
     private void place_Or_Drop_tile_control() {
-        view.displayGame();
+       
         if (game.faceDownTileCount() == 0) {
             Position pos = view.askPosition();
             game.putTile(pos);
@@ -75,6 +75,7 @@ public class Controller {
                 Position pos = view.askPosition();
                 game.putTile(pos);
             }
+            view.displayGame();
         }
     }
 
